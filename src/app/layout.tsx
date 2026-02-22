@@ -3,6 +3,7 @@ import './animations_led.css'
 import type { Metadata, Viewport } from 'next'
 
 export const metadata: Metadata = {
+  metadataBase: new URL('https://ponto-de-taxi-bandeirante.vercel.app'),
   title: 'Ponto de Táxi Bandeirante',
   description: 'O Ponto Oficial do Núcleo Bandeirante. Tradição e Segurança 24h.',
   appleWebApp: {
