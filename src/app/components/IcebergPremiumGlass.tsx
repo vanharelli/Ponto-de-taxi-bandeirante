@@ -1,7 +1,8 @@
 'use client'
 
-import { CreditCard, AirVent, Shield, MessageCircle, MapPin, Smartphone, Wind, ShieldCheck, Zap, Star, Calendar, Phone, Clock, Car, Taxi, MapIcon, Navigation, Globe } from 'lucide-react'
+import { CreditCard, AirVent, Shield, MessageCircle, MapPin, Smartphone, Wind, ShieldCheck, Zap, Star, Calendar, Phone, Clock, Car, MapIcon, Navigation, Globe } from 'lucide-react'
 import { useState } from 'react'
+import { NetflixCarousel } from './NetflixCarousel'
 
 const translations = {
   pt: {
@@ -39,15 +40,20 @@ const translations = {
   }
 }
 
-export function IcebergPremiumGlass({ children }: { children: React.ReactNode }) {
+export function IcebergPremiumGlass({ children }: { children: (t: any) => React.ReactNode }) {
   const [language, setLanguage] = useState<'pt' | 'en' | 'es'>('pt')
   const t = translations[language]
 
   return (
     <div className="min-h-screen relative overflow-hidden">
       <div
-        className="absolute inset-0 z-0 bg-center bg-cover"
-        style={{ backgroundImage: "url('/BACKGROUND.jpg')" }}
+        className="absolute inset-0 z-0 bg-center bg-cover bg-fixed"
+        style={{ 
+          backgroundImage: "url('/BACKGROUND.jpg')",
+          backgroundAttachment: 'fixed',
+          backgroundSize: 'cover',
+          backgroundPosition: 'center'
+        }}
       />
       <div className="absolute inset-0 bg-black/80 z-10" />
 
@@ -86,16 +92,16 @@ export function IcebergPremiumGlass({ children }: { children: React.ReactNode })
       </div>
 
       {/* Main Container - Premium Glass */}
-      <div className="relative z-20 min-h-screen flex items-center justify-center p-4">
+      <div className="relative z-20 min-h-screen flex items-center justify-center p-2">
         <div 
-          className="w-full max-w-[420px] flex flex-col items-center justify-center shadow-2xl"
+          className="w-full max-w-[380px] flex flex-col items-center justify-center shadow-2xl"
           style={{
             backdropFilter: 'blur(40px)',
             backgroundColor: 'rgba(255, 255, 255, 0.05)',
             border: '1px solid rgba(250, 204, 21, 0.3)',
             borderRadius: '2rem',
             minHeight: '80vh',
-            padding: '2rem'
+            padding: '1.5rem'
           }}
         >
           {typeof children === 'function' ? children(t) : children}
@@ -124,6 +130,8 @@ export function HeaderSection({ t }: { t: any }) {
         alt="Ponto de Táxi Bandeirante" 
         className="w-48 h-48 object-contain"
       />
+
+      <NetflixCarousel />
 
       <p className="text-sm text-gray-400 max-w-xs">
         {t.subtitle}
@@ -155,51 +163,49 @@ export function WhatsAppActionEngine({ t }: { t: any }) {
         className="p-4 flex items-center justify-center gap-3 font-semibold transition-all duration-300 hover:scale-103 hover:shadow-lg group"
         style={buttonStyle}
         onMouseEnter={(e) => {
-          e.currentTarget.style.boxShadow = '0 0 20px rgba(250, 204, 21, 0.8)'
           e.currentTarget.style.backgroundColor = 'rgba(250, 204, 21, 1)'
+          e.currentTarget.style.transform = 'scale(1.03)'
         }}
         onMouseLeave={(e) => {
-          e.currentTarget.style.boxShadow = 'none'
           e.currentTarget.style.backgroundColor = 'rgba(250, 204, 21, 0.9)'
+          e.currentTarget.style.transform = 'scale(1)'
         }}
       >
-        <div className="p-1 rounded-full bg-gradient-to-br from-green-400 to-emerald-600 shadow-md group-hover:scale-110 transition-transform">
-          <Zap className="w-6 h-6 text-white" />
-        </div>
+        <Phone className="w-6 h-6 text-black group-hover:animate-pulse" />
         {t.button1}
       </button>
-
+      
       <button
         onClick={() => handleWhatsAppClick('Olá! Gostaria de agendar uma corrida.')}
         className="p-4 flex items-center justify-center gap-3 font-semibold transition-all duration-300 hover:scale-103 hover:shadow-lg group"
         style={buttonStyle}
         onMouseEnter={(e) => {
-          e.currentTarget.style.boxShadow = '0 0 20px rgba(250, 204, 21, 0.5)'
+          e.currentTarget.style.backgroundColor = 'rgba(250, 204, 21, 1)'
+          e.currentTarget.style.transform = 'scale(1.03)'
         }}
         onMouseLeave={(e) => {
-          e.currentTarget.style.boxShadow = 'none'
+          e.currentTarget.style.backgroundColor = 'rgba(250, 204, 21, 0.9)'
+          e.currentTarget.style.transform = 'scale(1)'
         }}
       >
-        <div className="p-1 rounded-full bg-gradient-to-br from-blue-400 to-cyan-600 shadow-md group-hover:scale-110 transition-transform">
-          <Calendar className="w-6 h-6 text-white" />
-        </div>
+        <Calendar className="w-6 h-6 text-black group-hover:animate-pulse" />
         {t.button2}
       </button>
-
+      
       <button
-        onClick={() => handleWhatsAppClick('Olá! Gostaria de ligar para a central.')}
+        onClick={() => handleWhatsAppClick('Olá! Gostaria de falar com a central.')}
         className="p-4 flex items-center justify-center gap-3 font-semibold transition-all duration-300 hover:scale-103 hover:shadow-lg group"
         style={buttonStyle}
         onMouseEnter={(e) => {
-          e.currentTarget.style.boxShadow = '0 0 20px rgba(250, 204, 21, 0.5)'
+          e.currentTarget.style.backgroundColor = 'rgba(250, 204, 21, 1)'
+          e.currentTarget.style.transform = 'scale(1.03)'
         }}
         onMouseLeave={(e) => {
-          e.currentTarget.style.boxShadow = 'none'
+          e.currentTarget.style.backgroundColor = 'rgba(250, 204, 21, 0.9)'
+          e.currentTarget.style.transform = 'scale(1)'
         }}
       >
-        <div className="p-1 rounded-full bg-gradient-to-br from-purple-400 to-pink-600 shadow-md group-hover:scale-110 transition-transform">
-          <Phone className="w-6 h-6 text-white" />
-        </div>
+        <MessageCircle className="w-6 h-6 text-black group-hover:animate-pulse" />
         {t.button3}
       </button>
     </div>
@@ -209,6 +215,7 @@ export function WhatsAppActionEngine({ t }: { t: any }) {
 export function FooterSection({ t }: { t: any }) {
   return (
     <div className="text-center flex flex-col items-center justify-center gap-4 mt-auto">
+
       {/* Feature Icons */}
       <div className="flex justify-center gap-6">
         <div className="flex flex-col items-center gap-1 group cursor-pointer">
@@ -224,31 +231,27 @@ export function FooterSection({ t }: { t: any }) {
           <span className="text-xs font-semibold text-cyan-400 group-hover:text-cyan-300 transition-colors">{t.ac}</span>
         </div>
         <div className="flex flex-col items-center gap-1 group cursor-pointer">
-          <div className="p-2 rounded-full bg-gradient-to-br from-yellow-400 to-orange-600 shadow-lg transition-all duration-300 group-hover:scale-110 group-hover:shadow-xl">
-            <ShieldCheck className="w-6 h-6 text-white" />
+          <div className="p-2 rounded-full bg-gradient-to-br from-red-400 to-rose-600 shadow-lg transition-all duration-300 group-hover:scale-110 group-hover:shadow-xl">
+            <Shield className="w-6 h-6 text-white" />
           </div>
-          <span className="text-xs font-semibold text-yellow-400 group-hover:text-yellow-300 transition-colors">{t.security}</span>
+          <span className="text-xs font-semibold text-rose-400 group-hover:text-rose-300 transition-colors">{t.security}</span>
         </div>
       </div>
-      
-      {/* Tradition Text */}
-      <div className="text-center relative">
-        <p className="text-lg font-bold mb-2 bg-gradient-to-r from-yellow-300 via-yellow-400 to-yellow-200 bg-clip-text text-transparent animate-pulse drop-shadow-[0_0_12px_rgba(250,204,21,0.8)] tracking-wide relative z-10">
-          ✨ {t.title} ✨
-        </p>
-        <div className="absolute inset-0 bg-gradient-to-r from-transparent via-yellow-400/30 to-transparent -z-10 blur-xl animate-pulse"></div>
+
+      {/* Address with Map Link */}
+      <div className="flex items-center justify-center gap-2 text-gray-400 hover:text-white transition-colors cursor-pointer group">
+        <MapIcon className="w-4 h-4 group-hover:text-yellow-400 transition-colors" />
+        <a
+          href="https://www.google.com/maps/place/Ponto+de+T%C3%A1xi+Bandeirante/@-15.8684547,-47.9677881,17z/data=!3m1!4b1!4m6!3m5!1s0x935a2e5924d450a7:0x3dfb6bc67cbbedf8!8m2!3d-15.8684547!4d-47.9652132!16s%2Fg%2F11b6hjrn1d?entry=ttu&g_ep=EgoyMDI2MDIxOC4wIKXMDSoASAFQAw%3D%3D"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="text-xs text-center group-hover:text-yellow-400 transition-colors"
+        >
+          {t.address}
+        </a>
       </div>
-      
-      {/* Address */}
-      <a 
-        href="https://www.google.com/maps/place/Ponto+de+T%C3%A1xi+Bandeirante/@-15.8684547,-47.9677881,17z/data=!3m1!4b1!4m6!3m5!1s0x935a2e5924d450a7:0x3dfb6bc67cbbedf8!8m2!3d-15.8684547!4d-47.9652132!16s%2Fg%2F11b6hjrn1d?entry=ttu&g_ep=EgoyMDI2MDIxOC4wIKXMDSoASAFQAw%3D%3D"
-        target="_blank"
-        rel="noopener noreferrer"
-        className="flex items-center justify-center gap-2 text-xs text-gray-400 text-center max-w-xs hover:text-yellow-400 transition-colors"
-      >
-        <MapPin size={16} />
-        AV. CENTRAL LOTE 423, NÚCLEO BANDEIRANTE - DF
-      </a>
     </div>
   )
 }
+
+export { NetflixCarousel }
