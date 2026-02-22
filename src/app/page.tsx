@@ -5,9 +5,13 @@ import { IcebergPremiumGlass, HeaderSection, WhatsAppActionEngine, FooterSection
 export default function Home() {
   return (
     <IcebergPremiumGlass>
-      <HeaderSection />
-      <WhatsAppActionEngine />
-      <FooterSection />
+      {(t: any) => (
+        <>
+          <HeaderSection t={t} />
+          <WhatsAppActionEngine t={t} />
+          <FooterSection t={t} />
+        </>
+      )}
     </IcebergPremiumGlass>
   )
 }

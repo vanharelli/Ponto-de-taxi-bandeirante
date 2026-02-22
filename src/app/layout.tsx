@@ -8,6 +8,27 @@ export const metadata: Metadata = {
     capable: true,
     statusBarStyle: 'black-translucent',
     title: 'Ponto Bandeirante'
+  },
+  openGraph: {
+    title: 'Ponto de Táxi Bandeirante',
+    description: 'O Ponto Oficial do Núcleo Bandeirante. Tradição e Segurança 24h.',
+    images: [
+      {
+        url: '/logotaxi.png',
+        width: 544,
+        height: 459,
+        alt: 'Ponto de Táxi Bandeirante'
+      }
+    ],
+    type: 'website',
+    locale: 'pt_BR',
+    siteName: 'Ponto de Táxi Bandeirante'
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Ponto de Táxi Bandeirante',
+    description: 'O Ponto Oficial do Núcleo Bandeirante. Tradição e Segurança 24h.',
+    images: ['/logotaxi.png']
   }
 }
 
