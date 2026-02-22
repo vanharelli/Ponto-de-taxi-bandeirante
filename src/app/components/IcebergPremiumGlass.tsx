@@ -6,7 +6,7 @@ import { useState } from 'react'
 const translations = {
   pt: {
     title: '+40 ANOS DE TRADIÇÃO',
-    subtitle: 'TRADIÇÃO QUE NÃO PARA: A referência absoluta em transporte seguro e rápido no coração do Bandeirante.',
+    subtitle: 'Presença histórica, eficiência moderna. A principal referência em transporte confiável e veloz no coração do Bandeirante.',
     button1: 'CHAMAR TÁXI AGORA',
     button2: 'AGENDAR CORRIDA',
     button3: 'LIGAR NA CENTRAL',
@@ -108,11 +108,11 @@ export function IcebergPremiumGlass({ children }: { children: React.ReactNode })
 export function HeaderSection({ t }: { t: any }) {
   return (
     <div className="text-center flex flex-col items-center justify-center gap-4 mb-auto">
-      {/* System Active Badge */}
+      {/* System Active Badge - LED Florescente com Efeito Sutil */}
       <div className="flex items-center justify-center gap-2 px-4 py-2 rounded-full border border-green-400/30 mb-4">
-        <div className="relative">
-          <div className="w-3 h-3 bg-green-400 rounded-full animate-pulse"></div>
-          <div className="absolute inset-0 w-3 h-3 bg-green-400 rounded-full animate-ping opacity-75"></div>
+        <div className="relative led-container">
+          <div className="w-3 h-3 rounded-full led-fluorescent iridescent-led-circle"></div>
+          <div className="iris-led-ring-3"></div>
         </div>
         <span className="text-green-300 text-sm font-semibold tracking-wide">
           SISTEMA ATIVO
