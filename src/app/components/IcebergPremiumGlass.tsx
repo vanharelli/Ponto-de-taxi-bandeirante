@@ -1,6 +1,7 @@
 'use client'
 
 import { CreditCard, AirVent, Shield, MessageCircle, MapPin, Smartphone, Wind, ShieldCheck, Zap, Star, Calendar, Phone, Clock, Car, MapIcon, Navigation, Globe } from 'lucide-react'
+import Image from 'next/image'
 import { useState } from 'react'
 import { NetflixCarousel } from './NetflixCarousel'
 
@@ -125,9 +126,11 @@ export function HeaderSection({ t }: { t: any }) {
         </span>
       </div>
 
-      <img 
+      <Image 
         src="/logotaxi.png" 
         alt="Ponto de Táxi Bandeirante" 
+        width={192}
+        height={192}
         className="w-48 h-48 object-contain"
       />
 
