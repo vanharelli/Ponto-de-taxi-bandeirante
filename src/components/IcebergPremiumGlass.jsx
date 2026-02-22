@@ -39,7 +39,7 @@ const translations = {
 }
 
 export function IcebergPremiumGlass() {
-  const [language, setLanguage] = useState<'pt' | 'en' | 'es'>('pt')
+  const [language, setLanguage] = useState('pt')
   const t = translations[language]
 
   return (
@@ -59,7 +59,7 @@ export function IcebergPremiumGlass() {
           {/* Language Selector */}
           <div className="flex justify-center mb-8">
             <div className="flex bg-white/10 backdrop-blur-md rounded-full p-1">
-              {(['pt', 'en', 'es'] as const).map((lang) => (
+              {['pt', 'en', 'es'].map((lang) => (
                 <button
                   key={lang}
                   onClick={() => setLanguage(lang)}
