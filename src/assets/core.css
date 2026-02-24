@@ -11,6 +11,7 @@
   --absolute-white: #FFFFFF;
   --gold-ring: #FFD700;
   --blue-verified: #3B82F6;
+  --neon-green: #25c522ff;
 }
 
 /* Mobile-first responsive styles */
@@ -218,6 +219,17 @@ body {
   box-shadow: 0 0 15px rgba(250, 204, 21, 0.7);
 }
 
+/* Custom Neon Green and Gold borders - Force override */
+.neon-green-border {
+  border: 2px solid var(--neon-green) !important;
+  box-shadow: 0 0 10px var(--neon-green) !important;
+}
+
+.gold-border {
+  border: 2px solid var(--gold-ring) !important;
+  box-shadow: 0 0 10px var(--gold-ring) !important;
+}
+
 /* Touch-friendly button sizes for mobile */
 @media (max-width: 768px) {
   .glass-button {
@@ -234,6 +246,62 @@ body {
 
 .cinematic-bg {
   animation: cinematic-pulse 8s ease-in-out infinite;
+}
+
+/* Professional Icon Animations */
+@keyframes icon-float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
+}
+
+@keyframes icon-glow {
+  0%, 100% { 
+    filter: drop-shadow(0 0 5px currentColor);
+  }
+  50% { 
+    filter: drop-shadow(0 0 20px currentColor) drop-shadow(0 0 30px currentColor);
+  }
+}
+
+@keyframes icon-pulse-glow {
+  0%, 100% { 
+    transform: scale(1);
+    filter: drop-shadow(0 0 8px currentColor);
+  }
+  50% { 
+    transform: scale(1.1);
+    filter: drop-shadow(0 0 15px currentColor) drop-shadow(0 0 25px currentColor);
+  }
+}
+
+.icon-professional {
+  animation: icon-float 3s ease-in-out infinite, icon-glow 2s ease-in-out infinite;
+  transition: all 0.3s ease;
+}
+
+.icon-professional:hover {
+  animation: icon-pulse-glow 1s ease-in-out infinite;
+  transform: scale(1.2);
+}
+
+/* Icon color enhancements */
+.icon-green {
+  color: #10b981;
+  filter: drop-shadow(0 0 8px #10b981);
+}
+
+.icon-blue {
+  color: #3b82f6;
+  filter: drop-shadow(0 0 8px #3b82f6);
+}
+
+.icon-purple {
+  color: #8b5cf6;
+  filter: drop-shadow(0 0 8px #8b5cf6);
+}
+
+.no-float {
+  animation: icon-glow 2s ease-in-out infinite !important;
 }
 
 @keyframes cinematic-drift {
@@ -257,4 +325,131 @@ body {
     radial-gradient(50% 35% at 80% 70%, rgba(255, 255, 255, 0.06), transparent 65%),
     linear-gradient(135deg, #111827 0%, #000000 55%, #1f2937 100%);
   animation: cinematic-drift 9s ease-in-out infinite;
+}
+
+/* Prismatic Ripple Effect for Status LED */
+.prismatic-led {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.prismatic-led::before {
+  content: '';
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  background-color: #25c522ff;
+  border-radius: 50%;
+  z-index: 2;
+  box-shadow: 0 0 10px #25c522ff;
+  animation: prismatic-pulse 1.5s ease-in-out infinite;
+}
+
+.prismatic-led::after {
+  content: '';
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  border: 2px solid transparent;
+  background-image: conic-gradient(
+    from 0deg,
+    red 0deg,
+    orange 60deg,
+    yellow 120deg,
+    green 180deg,
+    blue 240deg,
+    indigo 300deg,
+    violet 360deg
+  );
+  border-radius: 50%;
+  mask-image: radial-gradient(circle, transparent 40%, black 70%);
+  -webkit-mask-image: radial-gradient(circle, transparent 40%, black 70%);
+  animation: prismatic-expand 2s infinite linear;
+  z-index: 1;
+}
+
+@keyframes prismatic-expand {
+  0% {
+    transform: scale(1);
+    opacity: 1;
+    filter: hue-rotate(0deg) blur(1px);
+  }
+  100% {
+    transform: scale(6);
+    opacity: 0;
+    filter: hue-rotate(360deg) blur(3px);
+  }
+}
+
+@keyframes prismatic-pulse {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 1;
+    box-shadow: 0 0 10px #25c522ff;
+  }
+  50% {
+    transform: scale(1.3);
+    opacity: 0.8;
+    box-shadow: 0 0 20px #25c522ff, 0 0 30px #25c522ff;
+  }
+}
+
+@keyframes google-review-pulse {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.05);
+    opacity: 0.8;
+  }
+}
+
+.google-review-pulse {
+  animation: google-review-pulse 2s ease-in-out infinite;
+}
+
+.netflix-carousel .swiper-slide {
+  width: 378px !important;
+  height: 252px !important;
+  margin-right: 18px !important;
+  filter: blur(8px);
+  transition: filter 300ms ease;
+}
+
+.netflix-carousel .swiper-slide-active {
+  filter: blur(0);
+}
+
+@media (max-width: 640px) {
+  .netflix-carousel .swiper-slide {
+    width: 270px !important;
+    height: 180px !important;
+    margin-right: 14px !important;
+  }
+}
+
+@media (min-width: 768px) {
+  .netflix-carousel .swiper-slide {
+    margin-right: 20px !important;
+  }
+}
+
+@media (min-width: 1024px) {
+  .netflix-carousel .swiper-slide {
+    width: 396px !important;
+    height: 264px !important;
+    margin-right: 22px !important;
+  }
+}
+
+@media (min-width: 1280px) {
+  .netflix-carousel .swiper-slide {
+    margin-right: 26px !important;
+  }
 }

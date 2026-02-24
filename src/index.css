@@ -1,6 +1,6 @@
 /* Custom styles imports */
-@import './assets/core.css';
-@import './assets/animations_led.css';
+@import url('./assets/core.css');
+@import url('./assets/animations_led.css');
 
 /* Tailwind CSS */
 @tailwind base;
