@@ -1,8 +1,7 @@
 import { Swiper, SwiperSlide } from 'swiper/react'
 import 'swiper/css'
 import 'swiper/css/navigation'
-import 'swiper/css/pagination'
-import { Navigation, Pagination, Autoplay } from 'swiper/modules'
+import { Navigation, Autoplay } from 'swiper/modules'
 
 const imageUrls = [
   '/turistico/Pontao-divulgacao-2.jpg',
@@ -37,7 +36,6 @@ export function TouristCarousel() {
         className="w-full h-[140px] sm:h-[200px] md:h-[280px] rounded-2xl shadow-2xl border border-white/10"
         style={{
           '--swiper-navigation-color': '#F2B705',
-          '--swiper-pagination-color': '#F2B705',
         } as React.CSSProperties}
       >
         {imageUrls.map((url, index) => (
