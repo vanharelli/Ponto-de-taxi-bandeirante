@@ -1,5 +1,5 @@
 import { useState, type MouseEvent, useEffect } from 'react'
-import { CreditCard, AirVent, Shield, MapPin, Phone, Star, Clock, Music, Armchair } from 'lucide-react'
+import { CreditCard, AirVent, Shield, MapPin, Phone, Star, Clock, Music, Armchair, Briefcase } from 'lucide-react'
 import { NetflixCarousel } from './NetflixCarousel';
 import { TriageModal } from './TriageModal';
 
@@ -17,6 +17,7 @@ const translations = {
     security: 'SEGURANÇA',
     music: 'MÚSICA',
     comfort: 'CONFORTO',
+    professional: 'PROFISSIONAL',
     locationTitle: 'NOSSA LOCALIZAÇÃO',
     mapOverlay: 'LOCALIZAÇÃO NO MAPA',
     mapClick: 'Clique para traçar a rota',
@@ -47,6 +48,7 @@ const translations = {
     security: 'SECURITY',
     music: 'MUSIC',
     comfort: 'COMFORT',
+    professional: 'PROFESSIONAL',
     locationTitle: 'OUR LOCATION',
     mapOverlay: 'LOCATION ON MAP',
     mapClick: 'Click to route',
@@ -77,6 +79,7 @@ const translations = {
     security: 'SEGURIDAD',
     music: 'MÚSICA',
     comfort: 'CONFORT',
+    professional: 'PROFESIONAL',
     locationTitle: 'NUESTRA UBICACIÓN',
     mapOverlay: 'UBICACIÓN EN EL MAPA',
     mapClick: 'Clic para ruta',
@@ -192,7 +195,7 @@ export function IcebergPremiumGlass() {
             </div>
 
             {/* Language Selector */}
-            <div className="flex bg-white/10 backdrop-blur-md rounded-full p-1">
+            <div className="flex bg-white/10 backdrop-blur-md rounded-full p-0.5 scale-75 origin-right">
               {[
                 { code: 'pt', flag: 'br', label: 'PT' },
                 { code: 'en', flag: 'us', label: 'EN' },
@@ -201,7 +204,7 @@ export function IcebergPremiumGlass() {
                 <button
                   key={lang.code}
                   onClick={() => setLanguage(lang.code as 'pt' | 'en' | 'es')}
-                  className={`px-3 py-1.5 sm:px-4 sm:py-2 rounded-full text-xs sm:text-sm font-medium transition-all duration-200 flex items-center gap-2 ${
+                  className={`px-2 py-1 rounded-full text-[10px] font-medium transition-all duration-200 flex items-center gap-1.5 ${
                     language === lang.code
                       ? 'bg-yellow-400 text-black'
                       : 'text-white hover:bg-white/20'
@@ -210,7 +213,7 @@ export function IcebergPremiumGlass() {
                   <img 
                     src={`https://flagcdn.com/w40/${lang.flag}.png`} 
                     alt={lang.label} 
-                    className="w-5 h-3.5 object-cover rounded-sm shadow-sm" 
+                    className="w-3.5 h-2.5 object-cover rounded-sm shadow-sm" 
                   />
                   {lang.label}
                 </button>
@@ -346,6 +349,10 @@ export function IcebergPremiumGlass() {
             <div className="flex flex-col items-center">
               <Armchair className="w-10 h-10 sm:w-12 sm:h-12 icon-professional no-float icon-blue rounded-lg p-2" />
               <p className="text-blue-400 font-bold text-xs sm:text-sm mt-2">{t.comfort}</p>
+            </div>
+            <div className="flex flex-col items-center">
+              <Briefcase className="w-10 h-10 sm:w-12 sm:h-12 icon-professional no-float icon-purple rounded-lg p-2" />
+              <p className="text-purple-400 font-bold text-xs sm:text-sm mt-2">{t.professional}</p>
             </div>
           </div>
 

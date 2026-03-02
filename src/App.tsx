@@ -44,7 +44,7 @@ function App() {
           playsInline
           className="w-full h-full object-cover opacity-30"
         >
-          <source src="https://media.istockphoto.com/id/1241352163/pt/v%C3%ADdeo/the-ride-home.mp4?s=mp4-640x640-is&k=20&c=jSepfsSZgFOw0DDRVfcyxRX1C3U8Zg1u81lKYZpRysY=" type="video/mp4" />
+          <source src="/video1.mp4" type="video/mp4" />
         </video>
         <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-black/70 to-black/90"></div>
       </div>
