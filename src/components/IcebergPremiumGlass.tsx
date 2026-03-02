@@ -174,7 +174,7 @@ export function IcebergPremiumGlass() {
         <div className="w-full h-full max-w-7xl flex flex-col items-center justify-start animate-fade-in-up overflow-y-auto custom-scrollbar relative mx-auto">
           
           {/* Header: Logo Left, Language Right */}
-          <div className="w-full flex justify-between items-center mb-6 px-2 sm:px-4 border-b border-white/10 pb-4">
+          <div className="w-full flex justify-between items-center mb-6 px-2 sm:px-4 border-b border-yellow-400/30 pb-4">
             {/* Logo & Brand */}
             <div className="flex items-center gap-3">
               <img 
@@ -411,7 +411,7 @@ export function IcebergPremiumGlass() {
           </div>
 
           {/* Terms and Developer Info */}
-          <div className="w-full flex flex-col items-center justify-center gap-2 mt-8 mb-4 border-t border-white/5 pt-6">
+          <div className="w-full flex flex-col items-center justify-center gap-2 mt-8 mb-4 border-t border-yellow-400/30 pt-6">
             <a href="#" className="text-white/40 hover:text-white/80 text-xs uppercase tracking-widest transition-colors duration-300">
               Termos de Uso e Privacidade
             </a>

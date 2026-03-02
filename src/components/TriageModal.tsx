@@ -152,31 +152,51 @@ export function TriageModal({ isOpen, onClose, phoneNumber }: TriageModalProps) 
               <span className="uppercase tracking-wide">SOLICITAR AGORA</span>
             </button>
             <button 
-              onClick={() => handleServiceSelect('AGENDAR')}
-              className="w-full bg-black/40 hover:bg-black/60 text-white border border-white/10 hover:border-[#F2B705] font-semibold py-4 px-6 rounded-xl flex items-center justify-start gap-4 transition-all active:scale-95 shadow-lg group backdrop-blur-md"
+              onClick={() => {
+                setFormData({ ...formData, serviceType: 'Agendar Horário' });
+                handleNextStep('location');
+              }}
+              className="w-full bg-black/40 hover:bg-[#F2B705]/20 border border-white/20 hover:border-[#F2B705] rounded-xl p-4 flex items-center gap-3 transition-all group"
             >
-              <div className="bg-[#F2B705]/20 p-2 rounded-lg group-hover:bg-[#F2B705] group-hover:text-black transition-colors border border-[#F2B705]/20">
-                <Calendar className="w-5 h-5 text-[#F2B705] group-hover:text-black transition-colors" />
+              <div className="bg-[#F2B705]/15 p-2 rounded-lg border border-[#F2B705]/20 group-hover:bg-[#F2B705]/25 transition-colors">
+                <Calendar className="w-6 h-6 text-[#F2B705]" />
               </div>
-              <span className="uppercase tracking-tight text-sm">AGENDAR HORÁRIO</span>
+              <div className="flex flex-col items-start">
+                <span className="text-white font-bold uppercase tracking-wide">Agendar Horário</span>
+                <span className="text-white/40 text-xs">Para outro momento</span>
+              </div>
             </button>
+
             <button 
-              onClick={() => handleServiceSelect('TOUR')}
-              className="w-full bg-black/40 hover:bg-black/60 text-white border border-white/10 hover:border-[#F2B705] font-semibold py-4 px-6 rounded-xl flex items-center justify-start gap-4 transition-all active:scale-95 shadow-lg group backdrop-blur-md"
+              onClick={() => {
+                setFormData({ ...formData, serviceType: 'City Tour' });
+                handleNextStep('location');
+              }}
+              className="w-full bg-black/40 hover:bg-[#F2B705]/20 border border-white/20 hover:border-[#F2B705] rounded-xl p-4 flex items-center gap-3 transition-all group"
             >
-              <div className="bg-[#F2B705]/20 p-2 rounded-lg group-hover:bg-[#F2B705] group-hover:text-black transition-colors border border-[#F2B705]/20">
-                <Map className="w-5 h-5 text-[#F2B705] group-hover:text-black transition-colors" />
+              <div className="bg-[#F2B705]/15 p-2 rounded-lg border border-[#F2B705]/20 group-hover:bg-[#F2B705]/25 transition-colors">
+                <Map className="w-6 h-6 text-[#F2B705]" />
               </div>
-              <span className="uppercase tracking-tight text-sm">CITY TOUR</span>
+              <div className="flex flex-col items-start">
+                <span className="text-white font-bold uppercase tracking-wide">City Tour</span>
+                <span className="text-white/40 text-xs">Conheça Brasília</span>
+              </div>
             </button>
+
             <button 
-              onClick={() => handleServiceSelect('PARTICULAR')}
-              className="w-full bg-black/40 hover:bg-black/60 text-white border border-white/10 hover:border-[#F2B705] font-semibold py-4 px-6 rounded-xl flex items-center justify-start gap-4 transition-all active:scale-95 shadow-lg group backdrop-blur-md"
+              onClick={() => {
+                setFormData({ ...formData, serviceType: 'Viagem Particular' });
+                handleNextStep('location');
+              }}
+              className="w-full bg-black/40 hover:bg-[#F2B705]/20 border border-white/20 hover:border-[#F2B705] rounded-xl p-4 flex items-center gap-3 transition-all group"
             >
-              <div className="bg-[#F2B705]/20 p-2 rounded-lg group-hover:bg-[#F2B705] group-hover:text-black transition-colors border border-[#F2B705]/20">
-                <Car className="w-5 h-5 text-[#F2B705] group-hover:text-black transition-colors" />
+              <div className="bg-[#F2B705]/15 p-2 rounded-lg border border-[#F2B705]/20 group-hover:bg-[#F2B705]/25 transition-colors">
+                <Car className="w-6 h-6 text-[#F2B705]" />
               </div>
-              <span className="uppercase tracking-tight text-sm">VIAGEM PARTICULAR</span>
+              <div className="flex flex-col items-start">
+                <span className="text-white font-bold uppercase tracking-wide">Viagem Particular</span>
+                <span className="text-white/40 text-xs">Para fora do DF</span>
+              </div>
             </button>
           </div>
         );
