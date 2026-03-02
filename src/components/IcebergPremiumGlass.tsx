@@ -1,8 +1,9 @@
 import { useState, type MouseEvent, useEffect } from 'react'
-import { CreditCard, AirVent, Shield, MapPin, Phone, Star, Clock, Music, Armchair } from 'lucide-react'
+import { CreditCard, AirVent, Shield, MapPin, Phone, Star, Clock, Music, Armchair, X } from 'lucide-react'
 import { NetflixCarousel } from './NetflixCarousel';
 import { TriageModal } from './TriageModal';
 import { TouristCarousel } from './TouristCarousel';
+import { createPortal } from 'react-dom';
 import { translations, type Language } from '../utils/translations';
 
 interface IcebergPremiumGlassProps {
@@ -14,6 +15,7 @@ export function IcebergPremiumGlass({ language, setLanguage }: IcebergPremiumGla
   const [showTriage, setShowTriage] = useState(false)
   const [isSystemActive, setIsSystemActive] = useState(true)
   const [showHours, setShowHours] = useState(false)
+  const [showTerms, setShowTerms] = useState(false)
   
   const t = translations[language]
   const phoneNumber = '+556135521071'
@@ -239,30 +241,30 @@ export function IcebergPremiumGlass({ language, setLanguage }: IcebergPremiumGla
           </div>
 
           {/* Features */}
-          <div className="flex flex-wrap justify-center gap-6 sm:gap-8 mb-8 w-full max-w-4xl px-4">
-            <div className="flex flex-col items-center">
-              <CreditCard className="w-10 h-10 sm:w-12 sm:h-12 icon-professional no-float icon-green rounded-lg p-2" />
-              <p className="text-green-400 font-bold text-xs sm:text-sm mt-2">{t.card}</p>
+          <div className="grid grid-cols-3 sm:flex sm:flex-wrap justify-center gap-4 sm:gap-8 mb-8 w-full max-w-4xl px-2">
+            <div className="flex flex-col items-center text-center">
+              <CreditCard className="w-8 h-8 sm:w-12 sm:h-12 icon-professional no-float icon-green rounded-lg p-1.5 sm:p-2" />
+              <p className="text-green-400 font-bold text-[10px] sm:text-sm mt-1 sm:mt-2">{t.card}</p>
             </div>
-            <div className="flex flex-col items-center">
-              <AirVent className="w-10 h-10 sm:w-12 sm:h-12 icon-professional no-float icon-blue rounded-lg p-2" />
-              <p className="text-blue-400 font-bold text-xs sm:text-sm mt-2">{t.ac}</p>
+            <div className="flex flex-col items-center text-center">
+              <AirVent className="w-8 h-8 sm:w-12 sm:h-12 icon-professional no-float icon-blue rounded-lg p-1.5 sm:p-2" />
+              <p className="text-blue-400 font-bold text-[10px] sm:text-sm mt-1 sm:mt-2">{t.ac}</p>
             </div>
-            <div className="flex flex-col items-center">
-              <Shield className="w-10 h-10 sm:w-12 sm:h-12 icon-professional no-float icon-purple rounded-lg p-2" />
-              <p className="text-purple-400 font-bold text-xs sm:text-sm mt-2">{t.security}</p>
+            <div className="flex flex-col items-center text-center">
+              <Shield className="w-8 h-8 sm:w-12 sm:h-12 icon-professional no-float icon-purple rounded-lg p-1.5 sm:p-2" />
+              <p className="text-purple-400 font-bold text-[10px] sm:text-sm mt-1 sm:mt-2">{t.security}</p>
             </div>
-            <div className="flex flex-col items-center">
-              <Music className="w-10 h-10 sm:w-12 sm:h-12 icon-professional no-float icon-green rounded-lg p-2" />
-              <p className="text-green-400 font-bold text-xs sm:text-sm mt-2">{t.music}</p>
+            <div className="flex flex-col items-center text-center">
+              <Music className="w-8 h-8 sm:w-12 sm:h-12 icon-professional no-float icon-green rounded-lg p-1.5 sm:p-2" />
+              <p className="text-green-400 font-bold text-[10px] sm:text-sm mt-1 sm:mt-2">{t.music}</p>
             </div>
-            <div className="flex flex-col items-center">
-              <Armchair className="w-10 h-10 sm:w-12 sm:h-12 icon-professional no-float icon-blue rounded-lg p-2" />
-              <p className="text-blue-400 font-bold text-xs sm:text-sm mt-2">{t.comfort}</p>
+            <div className="flex flex-col items-center text-center">
+              <Armchair className="w-8 h-8 sm:w-12 sm:h-12 icon-professional no-float icon-blue rounded-lg p-1.5 sm:p-2" />
+              <p className="text-blue-400 font-bold text-[10px] sm:text-sm mt-1 sm:mt-2">{t.comfort}</p>
             </div>
-            <div className="flex flex-col items-center">
-              <Clock className="w-10 h-10 sm:w-12 sm:h-12 icon-professional no-float icon-purple rounded-lg p-2" />
-              <p className="text-purple-400 font-bold text-xs sm:text-sm mt-2">{t.punctuality}</p>
+            <div className="flex flex-col items-center text-center">
+              <Clock className="w-8 h-8 sm:w-12 sm:h-12 icon-professional no-float icon-purple rounded-lg p-1.5 sm:p-2" />
+              <p className="text-purple-400 font-bold text-[10px] sm:text-sm mt-1 sm:mt-2">{t.punctuality}</p>
             </div>
           </div>
 
@@ -322,14 +324,73 @@ export function IcebergPremiumGlass({ language, setLanguage }: IcebergPremiumGla
 
           {/* Terms and Developer Info */}
           <div className="w-full flex flex-col items-center justify-center gap-2 mt-8 mb-4 border-t border-yellow-400/30 pt-6">
-            <a href="#" className="text-white/40 hover:text-white/80 text-xs uppercase tracking-widest transition-colors duration-300">
+            <button 
+              type="button"
+              onClick={(e) => {
+                e.preventDefault();
+                setShowTerms(true);
+              }}
+              className="text-[#F2B705]/80 hover:text-[#F2B705] text-xs uppercase tracking-widest transition-colors duration-300 font-medium bg-transparent border-none cursor-pointer"
+            >
               Termos de Uso e Privacidade
-            </a>
-            <p className="text-white/20 text-[10px] uppercase tracking-widest flex items-center gap-1 hover:text-white/40 transition-colors duration-300">
+            </button>
+            <p className="text-gray-400 text-[10px] uppercase tracking-widest flex items-center gap-1 hover:text-gray-300 transition-colors duration-300">
               Desenvolvido por: <a href="https://www.marketelli.com" target="_blank" rel="noopener noreferrer" className="text-shimmer-gold hover:text-yellow-400 transition-colors font-bold">www.marketelli.com</a>
             </p>
           </div>
-      </div>
+
+          </div>
+
+      {/* Terms Overlay - Protocolo de Operação Bandeirante (Main Page) */}
+      {showTerms && createPortal(
+        <div className="fixed inset-0 z-[9999] bg-black/80 backdrop-blur-sm flex items-center justify-center p-4 animate-in fade-in duration-300">
+          <div className="relative w-full max-w-lg bg-[#000000] border border-white/10 rounded-2xl shadow-2xl flex flex-col overflow-hidden max-h-[90vh] animate-in zoom-in-95 duration-300">
+            {/* Top Border Taxi Yellow */}
+            <div className="h-1 w-full bg-[#F2B705] shadow-[0_0_15px_rgba(242,183,5,0.6)] shrink-0" />
+            
+            <div className="flex flex-col p-6 overflow-hidden h-full">
+              <div className="flex justify-between items-center mb-4 border-b border-white/10 pb-4 shrink-0">
+                <h3 className="text-white font-bold text-lg uppercase tracking-wider">{translations[language].triage.termsTitle}</h3>
+                <button 
+                  type="button"
+                  onClick={() => setShowTerms(false)}
+                  className="text-white/60 hover:text-[#F2B705] transition-colors p-1 rounded-full hover:bg-white/5"
+                >
+                  <X className="w-6 h-6" />
+                </button>
+              </div>
+              
+              <div className="flex-1 overflow-y-auto text-white/80 text-sm space-y-5 pr-2 custom-scrollbar">
+                <div className="space-y-1">
+                  <h4 className="text-[#F2B705] font-bold text-xs uppercase tracking-wider">{translations[language].triage.terms1Title}</h4>
+                  <p className="leading-relaxed font-light text-white/90">{translations[language].triage.terms1Text}</p>
+                </div>
+                <div className="space-y-1">
+                  <h4 className="text-[#F2B705] font-bold text-xs uppercase tracking-wider">{translations[language].triage.terms2Title}</h4>
+                  <p className="leading-relaxed font-light text-white/90">{translations[language].triage.terms2Text}</p>
+                </div>
+                <div className="space-y-1">
+                  <h4 className="text-[#F2B705] font-bold text-xs uppercase tracking-wider">{translations[language].triage.terms3Title}</h4>
+                  <p className="leading-relaxed font-light text-white/90">{translations[language].triage.terms3Text}</p>
+                </div>
+                <div className="space-y-1">
+                  <h4 className="text-[#F2B705] font-bold text-xs uppercase tracking-wider">{translations[language].triage.terms4Title}</h4>
+                  <p className="leading-relaxed font-light text-white/90">{translations[language].triage.terms4Text}</p>
+                </div>
+              </div>
+              
+              <button 
+                type="button"
+                onClick={() => setShowTerms(false)}
+                className="w-full bg-[#F2B705] hover:bg-[#D4A004] text-black font-extrabold py-3.5 rounded-xl mt-6 transition-all uppercase tracking-widest text-xs shadow-[0_0_20px_rgba(242,183,5,0.2)] hover:shadow-[0_0_30px_rgba(242,183,5,0.4)] shrink-0"
+              >
+                {translations[language].triage.termsButton}
+              </button>
+            </div>
+          </div>
+        </div>,
+        document.body
+      )}
     </div>
   )
 }
