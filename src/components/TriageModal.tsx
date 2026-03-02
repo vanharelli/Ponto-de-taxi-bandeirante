@@ -1,4 +1,4 @@
-import { X, Car, Calendar, Map, Navigation, ArrowRight, User, Phone, Luggage, MapPin, Banknote, CreditCard, QrCode } from 'lucide-react';
+import { X, Car, Calendar, Map, Navigation, ArrowRight, User, Phone, Luggage, MapPin, Banknote, CreditCard, QrCode, Users, ArrowLeft } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { createPortal } from 'react-dom';
 
@@ -8,7 +8,7 @@ interface TriageModalProps {
   phoneNumber: string;
 }
 
-type Step = 'select-service' | 'location' | 'destination' | 'luggage' | 'luggage-count' | 'payment-method' | 'cash-change' | 'cash-change-amount' | 'contact';
+type Step = 'select-service' | 'location' | 'destination' | 'luggage' | 'luggage-count' | 'passengers' | 'payment-method' | 'cash-change' | 'cash-change-amount' | 'contact';
 
 interface FormData {
   serviceType: string;
@@ -16,6 +16,7 @@ interface FormData {
   destination: string;
   hasLuggage: string;
   luggageCount: string;
+  passengerCount: string;
   paymentMethod: string;
   needsChange: string;
   changeAmount: string;
@@ -31,6 +32,7 @@ export function TriageModal({ isOpen, onClose, phoneNumber }: TriageModalProps) 
     destination: '',
     hasLuggage: '',
     luggageCount: '',
+    passengerCount: '',
     paymentMethod: '',
     needsChange: '',
     changeAmount: '',
@@ -40,7 +42,14 @@ export function TriageModal({ isOpen, onClose, phoneNumber }: TriageModalProps) 
 
   useEffect(() => {
     if (isOpen) {
+      // Prevent body scroll
+      const originalStyle = window.getComputedStyle(document.body).overflow;
       document.body.style.overflow = 'hidden';
+      
+      // Prevent scrolling on iOS
+      const preventDefault = (e: Event) => e.preventDefault();
+      document.body.addEventListener('touchmove', preventDefault, { passive: false });
+
       setStep('select-service'); // Reset step when opening
       setFormData({ // Reset form data
         serviceType: '',
@@ -48,18 +57,19 @@ export function TriageModal({ isOpen, onClose, phoneNumber }: TriageModalProps) 
         destination: '',
         hasLuggage: '',
         luggageCount: '',
+        passengerCount: '',
         paymentMethod: '',
         needsChange: '',
         changeAmount: '',
         name: '',
         whatsapp: '',
       });
-    } else {
-      document.body.style.overflow = 'unset';
+
+      return () => {
+        document.body.style.overflow = originalStyle;
+        document.body.removeEventListener('touchmove', preventDefault);
+      };
     }
-    return () => {
-      document.body.style.overflow = 'unset';
-    };
   }, [isOpen]);
 
   if (!isOpen) return null;
@@ -120,6 +130,7 @@ export function TriageModal({ isOpen, onClose, phoneNumber }: TriageModalProps) 
       `📞 *WhatsApp:* ${formData.whatsapp}\n\n` +
       `📍 *Origem:* ${formData.location}\n` +
       `🏁 *Destino:* ${formData.destination}\n` +
+      `👥 *Passageiros:* ${formData.passengerCount}\n` +
       `🧳 *Bagagem:* ${luggageLabel}\n` +
       `💳 *Pagamento:* ${paymentLabel}\n` +
       changeLine +
@@ -182,7 +193,6 @@ export function TriageModal({ isOpen, onClose, phoneNumber }: TriageModalProps) 
                 className="w-full bg-black/40 border border-white/20 rounded-xl py-4 pl-12 pr-4 text-white placeholder-white/40 focus:outline-none focus:border-[#F2B705] transition-colors"
                 value={formData.location}
                 onChange={(e) => setFormData({...formData, location: e.target.value})}
-                autoFocus
               />
             </div>
             <button 
@@ -207,7 +217,6 @@ export function TriageModal({ isOpen, onClose, phoneNumber }: TriageModalProps) 
                 className="w-full bg-black/40 border border-white/20 rounded-xl py-4 pl-12 pr-4 text-white placeholder-white/40 focus:outline-none focus:border-[#F2B705] transition-colors"
                 value={formData.destination}
                 onChange={(e) => setFormData({...formData, destination: e.target.value})}
-                autoFocus
               />
             </div>
             <button 
@@ -227,7 +236,7 @@ export function TriageModal({ isOpen, onClose, phoneNumber }: TriageModalProps) 
             <div className="grid grid-cols-2 gap-4">
               <button 
                 onClick={() => {
-                  setFormData({ ...formData, hasLuggage: 'Sim', luggageCount: '', paymentMethod: '', needsChange: '' });
+                  setFormData({ ...formData, hasLuggage: 'Sim', luggageCount: '' });
                   handleNextStep('luggage-count');
                 }}
                 className="bg-black/40 hover:bg-[#F2B705]/20 border border-white/20 hover:border-[#F2B705] rounded-xl p-6 flex flex-col items-center gap-3 transition-all group"
@@ -237,8 +246,8 @@ export function TriageModal({ isOpen, onClose, phoneNumber }: TriageModalProps) 
               </button>
               <button 
                 onClick={() => {
-                  setFormData({ ...formData, hasLuggage: 'Não', luggageCount: '0', paymentMethod: '', needsChange: '' });
-                  handleNextStep('payment-method');
+                  setFormData({ ...formData, hasLuggage: 'Não', luggageCount: '0' });
+                  handleNextStep('passengers');
                 }}
                 className="bg-black/40 hover:bg-[#F2B705]/20 border border-white/20 hover:border-[#F2B705] rounded-xl p-6 flex flex-col items-center gap-3 transition-all group"
               >
@@ -264,12 +273,38 @@ export function TriageModal({ isOpen, onClose, phoneNumber }: TriageModalProps) 
                 className="w-full bg-black/40 border border-white/20 rounded-xl py-4 pl-12 pr-4 text-white placeholder-white/40 focus:outline-none focus:border-[#F2B705] transition-colors"
                 value={formData.luggageCount}
                 onChange={(e) => setFormData({ ...formData, luggageCount: e.target.value })}
-                autoFocus
               />
             </div>
             <button
-              onClick={() => formData.luggageCount && handleNextStep('payment-method')}
+              onClick={() => formData.luggageCount && handleNextStep('passengers')}
               disabled={!formData.luggageCount}
+              className="w-full bg-[#F2B705] disabled:opacity-50 disabled:cursor-not-allowed hover:bg-[#D4A004] text-black font-bold py-4 rounded-xl mt-2 transition-all flex items-center justify-center gap-2"
+            >
+              PRÓXIMO <ArrowRight className="w-5 h-5" />
+            </button>
+          </div>
+        );
+
+      case 'passengers':
+        return (
+          <div className="flex flex-col gap-4 animate-in fade-in slide-in-from-right duration-300">
+            <label className="text-white text-sm font-bold uppercase tracking-wide">Quantas pessoas vão com você?</label>
+            <div className="relative">
+              <Users className="absolute left-4 top-1/2 transform -translate-y-1/2 text-[#F2B705] w-5 h-5" />
+              <input
+                type="number"
+                inputMode="numeric"
+                min={1}
+                max={6}
+                placeholder="Ex: 2"
+                className="w-full bg-black/40 border border-white/20 rounded-xl py-4 pl-12 pr-4 text-white placeholder-white/40 focus:outline-none focus:border-[#F2B705] transition-colors"
+                value={formData.passengerCount}
+                onChange={(e) => setFormData({ ...formData, passengerCount: e.target.value })}
+              />
+            </div>
+            <button
+              onClick={() => formData.passengerCount && handleNextStep('payment-method')}
+              disabled={!formData.passengerCount}
               className="w-full bg-[#F2B705] disabled:opacity-50 disabled:cursor-not-allowed hover:bg-[#D4A004] text-black font-bold py-4 rounded-xl mt-2 transition-all flex items-center justify-center gap-2"
             >
               PRÓXIMO <ArrowRight className="w-5 h-5" />
@@ -366,7 +401,6 @@ export function TriageModal({ isOpen, onClose, phoneNumber }: TriageModalProps) 
                 className="w-full bg-black/40 border border-white/20 rounded-xl py-4 pl-12 pr-4 text-white placeholder-white/40 focus:outline-none focus:border-[#F2B705] transition-colors"
                 value={formData.changeAmount}
                 onChange={(e) => setFormData({ ...formData, changeAmount: e.target.value })}
-                autoFocus
               />
             </div>
             <button
@@ -429,6 +463,7 @@ export function TriageModal({ isOpen, onClose, phoneNumber }: TriageModalProps) 
       case 'destination': return 'SEU DESTINO';
       case 'luggage': return 'BAGAGEM';
       case 'luggage-count': return 'BAGAGEM';
+      case 'passengers': return 'PASSAGEIROS';
       case 'payment-method': return 'PAGAMENTO';
       case 'cash-change': return 'TROCO';
       case 'cash-change-amount': return 'TROCO';
@@ -443,6 +478,7 @@ export function TriageModal({ isOpen, onClose, phoneNumber }: TriageModalProps) 
       case 'destination': return 'Para onde você vai?';
       case 'luggage': return 'Precisamos definir o tamanho do veículo';
       case 'luggage-count': return 'Quantas bagagens você vai levar?';
+      case 'passengers': return 'Número de passageiros';
       case 'payment-method': return 'Escolha a forma de pagamento';
       case 'cash-change': return 'Se precisar, avisamos o motorista';
       case 'cash-change-amount': return 'Assim o motorista já vai preparado';
@@ -450,18 +486,52 @@ export function TriageModal({ isOpen, onClose, phoneNumber }: TriageModalProps) 
     }
   };
 
+  const handleBack = () => {
+    switch (step) {
+      case 'select-service': onClose(); break;
+      case 'location': setStep('select-service'); break;
+      case 'destination': setStep('location'); break;
+      case 'luggage': setStep('destination'); break;
+      case 'luggage-count': setStep('luggage'); break;
+      case 'passengers': 
+        setStep(formData.hasLuggage === 'Sim' ? 'luggage-count' : 'luggage');
+        break;
+      case 'payment-method': setStep('passengers'); break;
+      case 'cash-change': setStep('payment-method'); break;
+      case 'cash-change-amount': setStep('cash-change'); break;
+      case 'contact': 
+        if (formData.paymentMethod === 'Dinheiro') {
+          setStep(formData.needsChange === 'Sim' ? 'cash-change-amount' : 'cash-change');
+        } else {
+          setStep('payment-method');
+        }
+        break;
+    }
+  };
+
   return createPortal(
     <div className="fixed inset-0 z-[9999] flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm animate-in fade-in duration-200">
       <div className="relative w-full max-w-md bg-white/10 backdrop-blur-xl border border-yellow-400/30 rounded-3xl p-6 shadow-2xl transform transition-all scale-100 animate-in zoom-in-95 duration-200">
         
-        {/* Close Button */}
-        <button 
-          onClick={onClose}
-          className="absolute top-4 right-4 text-white/60 hover:text-white transition-colors p-2 rounded-full hover:bg-white/10 z-10"
-          aria-label="Close modal"
-        >
-          <X className="w-6 h-6" />
-        </button>
+        {/* Navigation Buttons */}
+        <div className="absolute top-4 w-full px-8 left-0 flex justify-between items-center z-10 pointer-events-none">
+          {step !== 'select-service' && (
+            <button 
+              onClick={handleBack}
+              className="text-white/60 hover:text-white transition-colors p-2 rounded-full hover:bg-white/10 pointer-events-auto -ml-2"
+              aria-label="Go back"
+            >
+              <ArrowLeft className="w-6 h-6" />
+            </button>
+          )}
+          <button 
+            onClick={onClose}
+            className="text-white/60 hover:text-white transition-colors p-2 rounded-full hover:bg-white/10 pointer-events-auto ml-auto -mr-2"
+            aria-label="Close modal"
+          >
+            <X className="w-6 h-6" />
+          </button>
+        </div>
 
         {/* Header */}
         <div className="text-center mb-8 mt-2">

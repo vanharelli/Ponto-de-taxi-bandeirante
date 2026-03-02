@@ -2,6 +2,7 @@ import { useState, type MouseEvent, useEffect } from 'react'
 import { CreditCard, AirVent, Shield, MapPin, Phone, Star, Clock, Music, Armchair, Briefcase } from 'lucide-react'
 import { NetflixCarousel } from './NetflixCarousel';
 import { TriageModal } from './TriageModal';
+import { TouristCarousel } from './TouristCarousel';
 
 const translations = {
   pt: {
@@ -18,7 +19,7 @@ const translations = {
     music: 'MÚSICA',
     comfort: 'CONFORTO',
     professional: 'PROFISSIONAL',
-    locationTitle: 'NOSSA LOCALIZAÇÃO',
+    locationTitle: 'PONTOS TURÍSTICOS DE BRASÍLIA',
     mapOverlay: 'LOCALIZAÇÃO NO MAPA',
     mapClick: 'Clique para traçar a rota',
     address: 'AV. CENTRAL LOTE 423, NÚCLEO BANDEIRANTE - DF',
@@ -49,7 +50,7 @@ const translations = {
     music: 'MUSIC',
     comfort: 'COMFORT',
     professional: 'PROFESSIONAL',
-    locationTitle: 'OUR LOCATION',
+    locationTitle: 'BRASÍLIA TOURIST SPOTS',
     mapOverlay: 'LOCATION ON MAP',
     mapClick: 'Click to route',
     address: 'AV. CENTRAL LOT 423, NÚCLEO BANDEIRANTE - DF',
@@ -80,7 +81,7 @@ const translations = {
     music: 'MÚSICA',
     comfort: 'CONFORT',
     professional: 'PROFESIONAL',
-    locationTitle: 'NUESTRA UBICACIÓN',
+    locationTitle: 'PUNTOS TURÍSTICOS DE BRASILIA',
     mapOverlay: 'UBICACIÓN EN EL MAPA',
     mapClick: 'Clic para ruta',
     address: 'AV. CENTRAL LOTE 423, NÚCLEO BANDEIRANTE - DF',
@@ -180,7 +181,6 @@ export function IcebergPremiumGlass() {
                 src="/logotaxi.webp" 
                 alt="Logo Ponto de Táxi Bandeirante" 
                 className="w-12 h-12 sm:w-16 sm:h-16 object-contain pointer-events-none select-none"
-                fetchPriority="high"
                 loading="eager"
                 decoding="sync"
               />
@@ -361,41 +361,9 @@ export function IcebergPremiumGlass() {
             <h2 className="text-xl sm:text-2xl font-bold text-center mb-6 text-white tracking-wider uppercase drop-shadow-md">
               {t.locationTitle}
             </h2>
-            <a 
-              href="https://www.google.com/maps/dir//Ponto+de+T%C3%A1xi+Bandeirante,+Av.+Central,+s%2Fn+-+lt+499%2F505+-+N%C3%BAcleo+Bandeirante,+Bras%C3%ADlia+-+DF,+71710-550/@-15.8400512,-47.9756288,14z/data=!4m8!4m7!1m0!1m5!1m1!1s0x935a2e5924d450a7:0x3dfb6bc67cbbedf8!2m2!1d-47.9652132!2d-15.8684547?entry=ttu&g_ep=EgoyMDI2MDIyNS4wIKXMDSoASAFQAw%3D%3D"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="relative block w-full h-64 sm:h-72 rounded-2xl overflow-hidden group border border-white/10 hover:border-yellow-400/50 transition-all duration-300 shadow-lg hover:shadow-yellow-400/20"
-            >
-              {/* Google Maps Embed */}
-              <div className="absolute inset-0 bg-[#1a2333] flex items-center justify-center">
-                <iframe 
-                  src="https://maps.google.com/maps?q=-15.8684547,-47.9652132&hl=pt&z=17&output=embed"
-                  width="100%" 
-                  height="100%" 
-                  style={{ border: 0, filter: 'grayscale(0.3) contrast(1.1)' }} 
-                  allowFullScreen 
-                  loading="lazy" 
-                  referrerPolicy="no-referrer-when-downgrade"
-                  className="w-full h-full opacity-80 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
-                ></iframe>
-              </div>
-              
-              {/* Content Overlay - Visible but allows seeing the map */}
-              <div className="absolute inset-0 flex flex-col items-center justify-center bg-black/10 hover:bg-black/0 transition-colors">
-                <div className="bg-black/80 backdrop-blur-xl border border-yellow-400/30 rounded-xl p-6 shadow-2xl flex flex-col items-center gap-3">
-                  <div className="bg-yellow-400/90 p-3 rounded-full shadow-[0_0_20px_rgba(250,204,21,0.4)] group-hover:scale-110 transition-transform duration-300 backdrop-blur-sm border border-yellow-200/50">
-                    <MapPin className="w-6 h-6 text-black" />
-                  </div>
-                  <h3 className="text-white font-bold text-sm sm:text-base tracking-wider uppercase drop-shadow-md border-b border-yellow-400/30 pb-2">
-                    {t.mapOverlay}
-                  </h3>
-                  <p className="text-white text-xs font-medium">
-                    {t.mapClick}
-                  </p>
-                </div>
-              </div>
-            </a>
+            <div className="relative block w-full rounded-2xl overflow-hidden group border border-white/10 hover:border-yellow-400/50 transition-all duration-300 shadow-lg hover:shadow-yellow-400/20">
+              <TouristCarousel />
+            </div>
           </div>
 
           {/* Footer Info Grid */}
@@ -440,6 +408,16 @@ export function IcebergPremiumGlass() {
               <span className="text-xs text-white/60 uppercase tracking-wider font-bold">{t.footerReview}</span>
               <p className="text-white text-sm font-medium opacity-80 group-hover:opacity-100">Google Reviews</p>
             </a>
+          </div>
+
+          {/* Terms and Developer Info */}
+          <div className="w-full flex flex-col items-center justify-center gap-2 mt-8 mb-4 border-t border-white/5 pt-6">
+            <a href="#" className="text-white/40 hover:text-white/80 text-xs uppercase tracking-widest transition-colors duration-300">
+              Termos de Uso e Privacidade
+            </a>
+            <p className="text-white/20 text-[10px] uppercase tracking-widest flex items-center gap-1 hover:text-white/40 transition-colors duration-300">
+              Desenvolvido por: <a href="https://www.marketelli.com" target="_blank" rel="noopener noreferrer" className="text-shimmer-gold hover:text-yellow-400 transition-colors font-bold">www.marketelli.com</a>
+            </p>
           </div>
       </div>
     </div>
