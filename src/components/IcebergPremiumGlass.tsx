@@ -3,105 +3,14 @@ import { CreditCard, AirVent, Shield, MapPin, Phone, Star, Clock, Music, Armchai
 import { NetflixCarousel } from './NetflixCarousel';
 import { TriageModal } from './TriageModal';
 import { TouristCarousel } from './TouristCarousel';
+import { translations, type Language } from '../utils/translations';
 
-const translations = {
-  pt: {
-    title: 'CENTRAL DE ATENDIMENTO',
-    tradition: '+40 ANOS DE TRADIÇÃO',
-    subtitle: 'Presença histórica, eficiência moderna. A principal referência em transporte confiável e veloz no coração do Bandeirante.',
-    readiness: 'PRONTIDÃO ABSOLUTA 24 HORAS. INDEPENDENTE DO DESTINO OU DO HORÁRIO, NOSSOS MELHORES VEÍCULOS JÁ ESTÃO À SUA DISPOSIÇÃO.',
-    button1: 'SOLICITAR TÁXI',
-    statusActive: 'SISTEMA ATIVO',
-    statusInactive: 'SISTEMA OFFLINE',
-    card: 'PIX/CARD',
-    ac: 'AR COND.',
-    security: 'SEGURANÇA',
-    music: 'MÚSICA',
-    comfort: 'CONFORTO',
-    professional: 'PROFISSIONAL',
-    locationTitle: 'PONTOS TURÍSTICOS DE BRASÍLIA',
-    mapOverlay: 'LOCALIZAÇÃO NO MAPA',
-    mapClick: 'Clique para traçar a rota',
-    address: 'AV. CENTRAL LOTE 423, NÚCLEO BANDEIRANTE - DF',
-    triageTitle: 'Selecione o Serviço',
-    serviceNow: 'Solicitar Agora',
-    serviceSchedule: 'Agendar Horário',
-    serviceTour: 'City Tour',
-    serviceTrip: 'Viagem Particular',
-    footerAddress: 'ENDEREÇO',
-    footerCall: 'LIGAR AGORA',
-    footerReview: 'AVALIE-NOS',
-    hoursTitle: 'HORÁRIO DE FUNCIONAMENTO',
-    hoursOpen: '03:00 - 20:00 (Seg-Dom)',
-    hoursStatusOpen: 'ABERTO AGORA',
-    hoursStatusClosed: 'FECHADO AGORA'
-  },
-  en: {
-    title: 'CUSTOMER SERVICE CENTER',
-    tradition: '+40 YEARS OF TRADITION',
-    subtitle: 'Historic presence, modern efficiency. The leading reference for reliable and fast transportation in the heart of Bandeirante.',
-    readiness: 'ABSOLUTE 24-HOUR READINESS. REGARDLESS OF DESTINATION OR TIME, OUR BEST VEHICLES ARE ALREADY AT YOUR DISPOSAL.',
-    button1: 'REQUEST TAXI',
-    statusActive: 'SYSTEM ACTIVE',
-    statusInactive: 'SYSTEM OFFLINE',
-    card: 'PIX/CARD',
-    ac: 'A/C',
-    security: 'SECURITY',
-    music: 'MUSIC',
-    comfort: 'COMFORT',
-    professional: 'PROFESSIONAL',
-    locationTitle: 'BRASÍLIA TOURIST SPOTS',
-    mapOverlay: 'LOCATION ON MAP',
-    mapClick: 'Click to route',
-    address: 'AV. CENTRAL LOT 423, NÚCLEO BANDEIRANTE - DF',
-    triageTitle: 'Select Service',
-    serviceNow: 'Request Now',
-    serviceSchedule: 'Schedule Ride',
-    serviceTour: 'City Tour',
-    serviceTrip: 'Private Trip',
-    footerAddress: 'ADDRESS',
-    footerCall: 'CALL NOW',
-    footerReview: 'RATE US',
-    hoursTitle: 'OPERATING HOURS',
-    hoursOpen: '03:00 AM - 08:00 PM (Mon-Sun)',
-    hoursStatusOpen: 'OPEN NOW',
-    hoursStatusClosed: 'CLOSED NOW'
-  },
-  es: {
-    title: 'CENTRAL DE ATENCIÓN',
-    tradition: '+40 AÑOS DE TRADICIÓN',
-    subtitle: 'Presencia histórica, eficiencia moderna. La principal referencia en transporte confiable y rápido en el corazón de Bandeirante.',
-    readiness: 'DISPONIBILIDAD ABSOLUTA 24 HORAS. INDEPENDIENTEMENTE DEL DESTINO O HORARIO, NUESTROS MEJORES VEHÍCULOS YA ESTÁN A SU DISPOSICIÓN.',
-    button1: 'SOLICITAR TAXI',
-    statusActive: 'SISTEMA ACTIVO',
-    statusInactive: 'SISTEMA OFFLINE',
-    card: 'PIX/TARJETA',
-    ac: 'A/A',
-    security: 'SEGURIDAD',
-    music: 'MÚSICA',
-    comfort: 'CONFORT',
-    professional: 'PROFESIONAL',
-    locationTitle: 'PUNTOS TURÍSTICOS DE BRASILIA',
-    mapOverlay: 'UBICACIÓN EN EL MAPA',
-    mapClick: 'Clic para ruta',
-    address: 'AV. CENTRAL LOTE 423, NÚCLEO BANDEIRANTE - DF',
-    triageTitle: 'Seleccione Servicio',
-    serviceNow: 'Solicitar Ahora',
-    serviceSchedule: 'Agendar Viaje',
-    serviceTour: 'City Tour',
-    serviceTrip: 'Viaje Particular',
-    footerAddress: 'DIRECCIÓN',
-    footerCall: 'LLAMAR AHORA',
-    footerReview: 'EVALÚENOS',
-    hoursTitle: 'HORARIO DE ATENCIÓN',
-    hoursOpen: '03:00 - 20:00 (Lun-Dom)',
-    hoursStatusOpen: 'ABIERTO AHORA',
-    hoursStatusClosed: 'CERRADO AHORA'
-  }
+interface IcebergPremiumGlassProps {
+  language: Language;
+  setLanguage: (lang: Language) => void;
 }
 
-export function IcebergPremiumGlass() {
-  const [language, setLanguage] = useState<'pt' | 'en' | 'es'>('pt')
+export function IcebergPremiumGlass({ language, setLanguage }: IcebergPremiumGlassProps) {
   const [showTriage, setShowTriage] = useState(false)
   const [isSystemActive, setIsSystemActive] = useState(true)
   const [showHours, setShowHours] = useState(false)
@@ -170,6 +79,7 @@ export function IcebergPremiumGlass() {
           isOpen={showTriage}
           onClose={() => setShowTriage(false)}
           phoneNumber="556135521071"
+          language={language}
         />
         <div className="w-full h-full max-w-7xl flex flex-col items-center justify-start animate-fade-in-up overflow-y-auto custom-scrollbar relative mx-auto">
           
@@ -351,8 +261,8 @@ export function IcebergPremiumGlass() {
               <p className="text-blue-400 font-bold text-xs sm:text-sm mt-2">{t.comfort}</p>
             </div>
             <div className="flex flex-col items-center">
-              <Briefcase className="w-10 h-10 sm:w-12 sm:h-12 icon-professional no-float icon-purple rounded-lg p-2" />
-              <p className="text-purple-400 font-bold text-xs sm:text-sm mt-2">{t.professional}</p>
+              <Clock className="w-10 h-10 sm:w-12 sm:h-12 icon-professional no-float icon-purple rounded-lg p-2" />
+              <p className="text-purple-400 font-bold text-xs sm:text-sm mt-2">{t.punctuality}</p>
             </div>
           </div>
 

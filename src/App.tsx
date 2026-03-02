@@ -1,12 +1,14 @@
 import { IcebergPremiumGlass } from './components/IcebergPremiumGlass.tsx';
 import { useDoubleBackExit } from './hooks/useDoubleBackExit';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
+import { translations, type Language } from './utils/translations';
 import './assets/core.css';
 import './assets/animations_led.css';
 import './App.css';
 
 function App() {
   const { showExitToast } = useDoubleBackExit();
+  const [language, setLanguage] = useState<Language>('pt');
 
   useEffect(() => {
     // FRONTEND ARMOR (ANTI-PIRACY LEVEL 9)
@@ -67,15 +69,15 @@ function App() {
         {/* Premium Glass Container */}
         <div className="flex-1 flex items-center justify-center">
           <div className="w-full h-full">
-            <IcebergPremiumGlass />
+            <IcebergPremiumGlass language={language} setLanguage={setLanguage} />
           </div>
         </div>
       </div>
 
       {/* Security Toast (Double-Back Protocol) */}
       {showExitToast && (
-        <div className="fixed bottom-10 left-1/2 transform -translate-x-1/2 z-[9999] bg-[#0B1A30] border border-[#D4AF37] text-[#D4AF37] px-6 py-3 rounded-lg shadow-2xl font-bold tracking-wider animate-pulse">
-          Press back again to exit
+        <div className="fixed bottom-10 left-1/2 transform -translate-x-1/2 z-[9999] bg-[#0B1A30] border border-[#D4AF37] text-[#D4AF37] px-6 py-3 rounded-lg shadow-2xl font-bold tracking-wider animate-pulse whitespace-nowrap">
+          {translations[language].doubleBackExit}
         </div>
       )}
     </div>
