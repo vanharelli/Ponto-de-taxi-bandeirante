@@ -243,28 +243,28 @@ export function IcebergPremiumGlass({ language, setLanguage }: IcebergPremiumGla
           {/* Features */}
           <div className="grid grid-cols-3 sm:flex sm:flex-wrap justify-center gap-4 sm:gap-8 mb-8 w-full max-w-4xl px-2">
             <div className="flex flex-col items-center text-center">
-              <CreditCard className="w-8 h-8 sm:w-12 sm:h-12 icon-professional no-float icon-green rounded-lg p-1.5 sm:p-2" />
-              <p className="text-green-400 font-bold text-[10px] sm:text-sm mt-1 sm:mt-2">{t.card}</p>
+              <CreditCard className="w-8 h-8 sm:w-12 sm:h-12 icon-professional no-float text-yellow-400 rounded-lg p-1.5 sm:p-2" />
+              <p className="text-yellow-400 font-bold text-[10px] sm:text-sm mt-1 sm:mt-2">{t.card}</p>
             </div>
             <div className="flex flex-col items-center text-center">
-              <AirVent className="w-8 h-8 sm:w-12 sm:h-12 icon-professional no-float icon-blue rounded-lg p-1.5 sm:p-2" />
-              <p className="text-blue-400 font-bold text-[10px] sm:text-sm mt-1 sm:mt-2">{t.ac}</p>
+              <AirVent className="w-8 h-8 sm:w-12 sm:h-12 icon-professional no-float text-yellow-400 rounded-lg p-1.5 sm:p-2" />
+              <p className="text-yellow-400 font-bold text-[10px] sm:text-sm mt-1 sm:mt-2">{t.ac}</p>
             </div>
             <div className="flex flex-col items-center text-center">
-              <Shield className="w-8 h-8 sm:w-12 sm:h-12 icon-professional no-float icon-purple rounded-lg p-1.5 sm:p-2" />
-              <p className="text-purple-400 font-bold text-[10px] sm:text-sm mt-1 sm:mt-2">{t.security}</p>
+              <Shield className="w-8 h-8 sm:w-12 sm:h-12 icon-professional no-float text-yellow-400 rounded-lg p-1.5 sm:p-2" />
+              <p className="text-yellow-400 font-bold text-[10px] sm:text-sm mt-1 sm:mt-2">{t.security}</p>
             </div>
             <div className="flex flex-col items-center text-center">
-              <Music className="w-8 h-8 sm:w-12 sm:h-12 icon-professional no-float icon-green rounded-lg p-1.5 sm:p-2" />
-              <p className="text-green-400 font-bold text-[10px] sm:text-sm mt-1 sm:mt-2">{t.music}</p>
+              <Music className="w-8 h-8 sm:w-12 sm:h-12 icon-professional no-float text-yellow-400 rounded-lg p-1.5 sm:p-2" />
+              <p className="text-yellow-400 font-bold text-[10px] sm:text-sm mt-1 sm:mt-2">{t.music}</p>
             </div>
             <div className="flex flex-col items-center text-center">
-              <Armchair className="w-8 h-8 sm:w-12 sm:h-12 icon-professional no-float icon-blue rounded-lg p-1.5 sm:p-2" />
-              <p className="text-blue-400 font-bold text-[10px] sm:text-sm mt-1 sm:mt-2">{t.comfort}</p>
+              <Armchair className="w-8 h-8 sm:w-12 sm:h-12 icon-professional no-float text-yellow-400 rounded-lg p-1.5 sm:p-2" />
+              <p className="text-yellow-400 font-bold text-[10px] sm:text-sm mt-1 sm:mt-2">{t.comfort}</p>
             </div>
             <div className="flex flex-col items-center text-center">
-              <Clock className="w-8 h-8 sm:w-12 sm:h-12 icon-professional no-float icon-purple rounded-lg p-1.5 sm:p-2" />
-              <p className="text-purple-400 font-bold text-[10px] sm:text-sm mt-1 sm:mt-2">{t.punctuality}</p>
+              <Clock className="w-8 h-8 sm:w-12 sm:h-12 icon-professional no-float text-yellow-400 rounded-lg p-1.5 sm:p-2" />
+              <p className="text-yellow-400 font-bold text-[10px] sm:text-sm mt-1 sm:mt-2">{t.punctuality}</p>
             </div>
           </div>
 
