@@ -39,9 +39,6 @@ export function TriageModal({ isOpen, onClose, phoneNumber, language }: TriageMo
   const [step, setStep] = useState<Step>('select-service');
   const [showTerms, setShowTerms] = useState(false);
   const t = translations[language].triage;
-  // Get terms translations directly from translations object
-  // We use type assertion or access directly if we are sure keys exist
-  const tTerms = translations[language] as any; 
 
   const [formData, setFormData] = useState<FormData>({
     serviceType: '',
@@ -719,10 +716,14 @@ export function TriageModal({ isOpen, onClose, phoneNumber, language }: TriageMo
               </p>
 
               <button 
-                onClick={() => setShowTerms(true)}
+                type="button"
+                onClick={() => {
+                  console.log('Terms button clicked');
+                  setShowTerms(true);
+                }}
                 className="text-white/40 hover:text-white/80 text-[10px] uppercase tracking-widest underline transition-colors"
               >
-                {tTerms.triage.termsLink}
+                {t.termsLink}
               </button>
 
               <button 
@@ -744,14 +745,15 @@ export function TriageModal({ isOpen, onClose, phoneNumber, language }: TriageMo
 
         {/* Terms Overlay - Protocolo de Operação Bandeirante */}
         {showTerms && (
-          <div className="absolute inset-0 z-50 bg-[#000000] flex flex-col animate-in slide-in-from-bottom duration-300">
+          <div className="absolute inset-0 z-[100] bg-[#000000] flex flex-col animate-in slide-in-from-bottom duration-300">
             {/* Top Border Taxi Yellow */}
             <div className="h-1 w-full bg-[#F2B705] shadow-[0_0_15px_rgba(242,183,5,0.6)]" />
             
             <div className="flex-1 flex flex-col p-6 overflow-hidden">
               <div className="flex justify-between items-center mb-6 border-b border-white/10 pb-4">
-                <h3 className="text-white font-bold text-lg uppercase tracking-wider">{tTerms.triage.termsTitle}</h3>
+                <h3 className="text-white font-bold text-lg uppercase tracking-wider">{t.termsTitle}</h3>
                 <button 
+                  type="button"
                   onClick={() => setShowTerms(false)}
                   className="text-white/60 hover:text-[#F2B705] transition-colors"
                 >
@@ -760,27 +762,28 @@ export function TriageModal({ isOpen, onClose, phoneNumber, language }: TriageMo
               </div>
               <div className="flex-1 overflow-y-auto text-white/80 text-sm space-y-6 pr-2 custom-scrollbar">
                 <div className="space-y-1">
-                  <h4 className="text-[#F2B705] font-bold text-xs uppercase tracking-wider">{tTerms.triage.terms1Title}</h4>
-                  <p className="leading-relaxed font-light text-white/90">{tTerms.triage.terms1Text}</p>
+                  <h4 className="text-[#F2B705] font-bold text-xs uppercase tracking-wider">{t.terms1Title}</h4>
+                  <p className="leading-relaxed font-light text-white/90">{t.terms1Text}</p>
                 </div>
                 <div className="space-y-1">
-                  <h4 className="text-[#F2B705] font-bold text-xs uppercase tracking-wider">{tTerms.triage.terms2Title}</h4>
-                  <p className="leading-relaxed font-light text-white/90">{tTerms.triage.terms2Text}</p>
+                  <h4 className="text-[#F2B705] font-bold text-xs uppercase tracking-wider">{t.terms2Title}</h4>
+                  <p className="leading-relaxed font-light text-white/90">{t.terms2Text}</p>
                 </div>
                 <div className="space-y-1">
-                  <h4 className="text-[#F2B705] font-bold text-xs uppercase tracking-wider">{tTerms.triage.terms3Title}</h4>
-                  <p className="leading-relaxed font-light text-white/90">{tTerms.triage.terms3Text}</p>
+                  <h4 className="text-[#F2B705] font-bold text-xs uppercase tracking-wider">{t.terms3Title}</h4>
+                  <p className="leading-relaxed font-light text-white/90">{t.terms3Text}</p>
                 </div>
                 <div className="space-y-1">
-                  <h4 className="text-[#F2B705] font-bold text-xs uppercase tracking-wider">{tTerms.triage.terms4Title}</h4>
-                  <p className="leading-relaxed font-light text-white/90">{tTerms.triage.terms4Text}</p>
+                  <h4 className="text-[#F2B705] font-bold text-xs uppercase tracking-wider">{t.terms4Title}</h4>
+                  <p className="leading-relaxed font-light text-white/90">{t.terms4Text}</p>
                 </div>
               </div>
               <button 
+                type="button"
                 onClick={() => setShowTerms(false)}
                 className="w-full bg-[#F2B705] hover:bg-[#D4A004] text-black font-extrabold py-4 rounded-xl mt-6 transition-all uppercase tracking-widest text-xs shadow-[0_0_20px_rgba(242,183,5,0.2)] hover:shadow-[0_0_30px_rgba(242,183,5,0.4)]"
               >
-                {tTerms.triage.termsButton}
+                {t.termsButton}
               </button>
             </div>
           </div>
