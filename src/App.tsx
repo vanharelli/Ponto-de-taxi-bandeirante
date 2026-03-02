@@ -1,9 +1,38 @@
 import { IcebergPremiumGlass } from './components/IcebergPremiumGlass.tsx';
+import { useDoubleBackExit } from './hooks/useDoubleBackExit';
+import { useEffect } from 'react';
 import './assets/core.css';
 import './assets/animations_led.css';
 import './App.css';
 
 function App() {
+  const { showExitToast } = useDoubleBackExit();
+
+  useEffect(() => {
+    // FRONTEND ARMOR (ANTI-PIRACY LEVEL 9)
+    const handleContextMenu = (e: Event) => e.preventDefault();
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (
+        e.key === 'F12' ||
+        (e.ctrlKey && e.shiftKey && ['I', 'J', 'C', 'U'].includes(e.key.toUpperCase())) ||
+        (e.ctrlKey && ['S', 'P', 'C', 'U'].includes(e.key.toUpperCase()))
+      ) {
+        e.preventDefault();
+      }
+    };
+    const handleDragStart = (e: Event) => e.preventDefault();
+
+    window.addEventListener('contextmenu', handleContextMenu);
+    window.addEventListener('keydown', handleKeyDown);
+    window.addEventListener('dragstart', handleDragStart);
+
+    return () => {
+      window.removeEventListener('contextmenu', handleContextMenu);
+      window.removeEventListener('keydown', handleKeyDown);
+      window.removeEventListener('dragstart', handleDragStart);
+    };
+  }, []);
+
   return (
     <div className="min-h-screen bg-black relative overflow-hidden">
       {/* Background Video Layer */}
@@ -15,7 +44,7 @@ function App() {
           playsInline
           className="w-full h-full object-cover opacity-30"
         >
-          <source src="/taxi-video.mp4" type="video/mp4" />
+          <source src="https://media.istockphoto.com/id/1241352163/pt/v%C3%ADdeo/the-ride-home.mp4?s=mp4-640x640-is&k=20&c=jSepfsSZgFOw0DDRVfcyxRX1C3U8Zg1u81lKYZpRysY=" type="video/mp4" />
         </video>
         <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-black/70 to-black/90"></div>
       </div>
@@ -25,7 +54,7 @@ function App() {
         <div
           className="absolute inset-0 bg-cover bg-center bg-fixed"
           style={{
-            backgroundImage: `url('/BACKGROUND.jpg')`,
+            backgroundImage: `url('/BACKGROUND.webp')`,
             backgroundAttachment: 'fixed'
           }}
         />
@@ -36,14 +65,19 @@ function App() {
       <div className="relative z-10 min-h-screen flex flex-col">
 
         {/* Premium Glass Container */}
-        <div className="flex-1 flex items-center justify-center px-4 pb-8">
-          <div className="premium-glass w-full max-w-6xl mx-auto">
+        <div className="flex-1 flex items-center justify-center">
+          <div className="w-full h-full">
             <IcebergPremiumGlass />
           </div>
         </div>
-
-
       </div>
+
+      {/* Security Toast (Double-Back Protocol) */}
+      {showExitToast && (
+        <div className="fixed bottom-10 left-1/2 transform -translate-x-1/2 z-[9999] bg-[#0B1A30] border border-[#D4AF37] text-[#D4AF37] px-6 py-3 rounded-lg shadow-2xl font-bold tracking-wider animate-pulse">
+          Press back again to exit
+        </div>
+      )}
     </div>
   );
 }
