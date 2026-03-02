@@ -1,5 +1,5 @@
 import { useState, type MouseEvent, useEffect } from 'react'
-import { CreditCard, AirVent, Shield, MapPin, Phone, Star, Clock, Music, Armchair, Briefcase } from 'lucide-react'
+import { CreditCard, AirVent, Shield, MapPin, Phone, Star, Clock, Music, Armchair } from 'lucide-react'
 import { NetflixCarousel } from './NetflixCarousel';
 import { TriageModal } from './TriageModal';
 import { TouristCarousel } from './TouristCarousel';

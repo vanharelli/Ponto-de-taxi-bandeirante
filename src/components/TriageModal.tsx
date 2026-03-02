@@ -1,4 +1,4 @@
-import { X, Car, Calendar, Map, Navigation, ArrowRight, User, Phone, Luggage, MapPin, Banknote, CreditCard, QrCode, Users, ArrowLeft, Clock, Info } from 'lucide-react';
+import { X, Car, Calendar, Map, Navigation, ArrowRight, User, Phone, Luggage, MapPin, Banknote, CreditCard, QrCode, Users, ArrowLeft, Clock } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { translations, type Language } from '../utils/translations';
