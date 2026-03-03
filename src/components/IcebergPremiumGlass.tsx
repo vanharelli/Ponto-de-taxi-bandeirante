@@ -89,13 +89,15 @@ export function IcebergPremiumGlass({ language, setLanguage }: IcebergPremiumGla
           <div className="w-full flex justify-between items-center mb-6 px-2 sm:px-4 border-b border-yellow-400/30 pb-4">
             {/* Logo & Brand */}
             <div className="flex items-center gap-3">
-              <img 
-                src="/logotaxi.webp" 
-                alt="Logo Ponto de Táxi Bandeirante" 
-                className="w-12 h-12 sm:w-16 sm:h-16 object-contain pointer-events-none select-none"
-                loading="eager"
-                decoding="sync"
-              />
+              <div className="relative w-12 h-12 sm:w-16 sm:h-16 rounded-full bg-black/40 border border-[#F2B705]/30 shadow-lg flex items-center justify-center overflow-hidden shimmer-button">
+                <img 
+                  src="/logotaxi.webp" 
+                  alt="Logo Ponto de Táxi Bandeirante" 
+                  className="w-[85%] h-[85%] object-contain pointer-events-none select-none z-10 translate-x-0.5"
+                  loading="eager"
+                  decoding="sync"
+                />
+              </div>
               <div className="flex flex-col">
                 <span className="text-white font-bold text-xs sm:text-sm tracking-wider leading-none">
                   PONTO DE TÁXI
@@ -278,33 +280,33 @@ export function IcebergPremiumGlass({ language, setLanguage }: IcebergPremiumGla
             </div>
           </div>
 
-          {/* Footer Info Grid */}
-          <div className="w-full grid grid-cols-1 md:grid-cols-3 gap-4 mt-auto pt-8 border-t border-white/10">
+          {/* Footer Info Grid - Compact Horizontal Layout */}
+          <div className="w-full flex flex-row justify-center items-stretch gap-2 sm:gap-4 mt-auto pt-4 border-t border-white/10 overflow-x-auto">
             {/* Address */}
             <a 
               href="https://www.google.com/maps/place/Ponto+de+T%C3%A1xi+Bandeirante/@-15.8684547,-47.9677881,17z/data=!3m1!4b1!4m6!3m5!1s0x935a2e5924d450a7:0x3dfb6bc67cbbedf8!8m2!3d-15.8684547!4d-47.9652132!16s%2Fg%2F11b6hjrn1d?entry=ttu&g_ep=EgoyMDI2MDIxOC4wIKXMDSoASAFQAw%3D%3D" 
               target="_blank" 
               rel="noopener noreferrer"
-              className="flex flex-col items-center justify-center gap-2 p-4 rounded-xl hover:bg-white/5 transition-colors group border border-white/5 hover:border-white/20"
+              className="flex-1 min-w-[100px] flex flex-col items-center justify-center gap-1.5 p-2 rounded-xl hover:bg-white/5 transition-colors group border border-white/5 hover:border-white/20"
             >
-              <div className="bg-green-500/20 p-3 rounded-full text-green-400 group-hover:bg-green-500 group-hover:text-black transition-colors">
-                <MapPin className="w-6 h-6" />
+              <div className="bg-green-500/20 p-2 rounded-full text-green-400 group-hover:bg-green-500 group-hover:text-black transition-colors">
+                <MapPin className="w-4 h-4 sm:w-5 sm:h-5" />
               </div>
-              <span className="text-xs text-white/60 uppercase tracking-wider font-bold">{t.footerAddress}</span>
-              <p className="text-white text-sm font-medium text-center opacity-80 group-hover:opacity-100">{t.address}</p>
+              <span className="text-[10px] sm:text-xs text-white/60 uppercase tracking-wider font-bold text-center leading-tight">{t.footerAddress}</span>
+              <p className="text-white text-[10px] sm:text-xs font-medium text-center opacity-80 group-hover:opacity-100 leading-tight line-clamp-2">NÚCLEO BANDEIRANTE</p>
             </a>
 
             {/* Phone */}
             <a 
               href={ `tel:${phoneNumber}` } 
               onClick={handleCallClick}
-              className="flex flex-col items-center justify-center gap-2 p-4 rounded-xl hover:bg-white/5 transition-colors group border border-white/5 hover:border-white/20"
+              className="flex-1 min-w-[100px] flex flex-col items-center justify-center gap-1.5 p-2 rounded-xl hover:bg-white/5 transition-colors group border border-white/5 hover:border-white/20"
             >
-              <div className="bg-blue-500/20 p-3 rounded-full text-blue-400 group-hover:bg-blue-500 group-hover:text-black transition-colors">
-                <Phone className="w-6 h-6" />
+              <div className="bg-blue-500/20 p-2 rounded-full text-blue-400 group-hover:bg-blue-500 group-hover:text-black transition-colors">
+                <Phone className="w-4 h-4 sm:w-5 sm:h-5" />
               </div>
-              <span className="text-xs text-white/60 uppercase tracking-wider font-bold">{t.footerCall}</span>
-              <p className="text-white text-sm font-medium opacity-80 group-hover:opacity-100">{phoneDisplay}</p>
+              <span className="text-[10px] sm:text-xs text-white/60 uppercase tracking-wider font-bold text-center leading-tight">{t.footerCall}</span>
+              <p className="text-white text-[10px] sm:text-xs font-medium opacity-80 group-hover:opacity-100 leading-tight whitespace-nowrap">{phoneDisplay}</p>
             </a>
 
             {/* Review */}
@@ -312,29 +314,41 @@ export function IcebergPremiumGlass({ language, setLanguage }: IcebergPremiumGla
               href="https://www.google.com/search?sca_esv=2cf39a8e3998f015&rlz=1C1VECK_pt-PTBR1186BR1186&sxsrf=ANbL-n5rwwULQ5EQBU9zivyFy8pGzsfy-g:1771891244853&si=AL3DRZEsmMGCryMMFSHJ3StBhOdZ2-6yYkXd_doETEE1OR-qOV1qpzDiU2D3LVbTw9_R9ji3A_spuNT7nTp0KHlZj1yz-LyCKYbBy8hdfEHlY6xfl8tYF4Ka5movcYLEzNVXM7f9UrBZdb3wz1khrfsFT_qcgWG5_Q%3D%3D&q=Ponto+de+T%C3%A1xi+Bandeirante+Coment%C3%A1rios&sa=X&ved=2ahUKEwiQp-uh6fCSAxXxK7kGHawEAvEQ0bkNegQILhAH&biw=1280&bih=609&dpr=2#lrd=0x935a2e5924d450a7:0x3dfb6bc67cbbedf8,3,,,,"
               target="_blank"
               rel="noopener noreferrer"
-              className="flex flex-col items-center justify-center gap-2 p-4 rounded-xl hover:bg-white/5 transition-colors group border border-white/5 hover:border-white/20"
+              className="flex-1 min-w-[100px] flex flex-col items-center justify-center gap-1.5 p-2 rounded-xl hover:bg-white/5 transition-colors group border border-white/5 hover:border-white/20"
             >
-              <div className="bg-yellow-500/20 p-3 rounded-full text-yellow-400 group-hover:bg-yellow-500 group-hover:text-black transition-colors">
-                <Star className="w-6 h-6 animate-pulse" />
+              <div className="bg-yellow-500/20 p-2 rounded-full text-yellow-400 group-hover:bg-yellow-500 group-hover:text-black transition-colors">
+                <Star className="w-4 h-4 sm:w-5 sm:h-5 animate-pulse" />
               </div>
-              <span className="text-xs text-white/60 uppercase tracking-wider font-bold">{t.footerReview}</span>
-              <p className="text-white text-sm font-medium opacity-80 group-hover:opacity-100">Google Reviews</p>
+              <span className="text-[10px] sm:text-xs text-white/60 uppercase tracking-wider font-bold text-center leading-tight">{t.footerReview}</span>
+              <p className="text-white text-[10px] sm:text-xs font-medium opacity-80 group-hover:opacity-100 leading-tight">Google Reviews</p>
             </a>
           </div>
 
           {/* Terms and Developer Info */}
-          <div className="w-full flex flex-col items-center justify-center gap-2 mt-8 mb-4 border-t border-yellow-400/30 pt-6">
+          <div className="w-full relative flex flex-col items-center justify-center gap-2 mt-8 mb-4 border-t border-yellow-400/30 pt-6">
             <button 
               type="button"
               onClick={(e) => {
                 e.preventDefault();
                 setShowTerms(true);
               }}
-              className="text-[#F2B705]/80 hover:text-[#F2B705] text-xs uppercase tracking-widest transition-colors duration-300 font-medium bg-transparent border-none cursor-pointer"
+              className="text-[#F2B705]/80 hover:text-[#F2B705] text-xs uppercase tracking-widest transition-colors duration-300 font-medium bg-transparent border-none cursor-pointer mb-2"
             >
               Termos de Uso e Privacidade
             </button>
-            <p className="text-gray-400 text-[10px] uppercase tracking-widest flex items-center gap-1 hover:text-gray-300 transition-colors duration-300">
+            
+            {/* Footer Logo - Centered */}
+            <div className="flex items-center justify-center mb-2">
+              <div className="relative w-16 h-16 sm:w-20 sm:h-20 rounded-full bg-black/40 border border-[#F2B705]/30 shadow-lg flex items-center justify-center overflow-hidden shimmer-button">
+                <img 
+                  src="/logotaxi.webp" 
+                  alt="Logo Ponto Bandeirante" 
+                  className="w-[85%] h-[85%] object-contain drop-shadow-lg z-10 translate-x-0.5"
+                />
+              </div>
+            </div>
+
+            <p className="text-[#F2B705]/60 text-[10px] uppercase tracking-widest flex items-center gap-1 hover:text-[#F2B705] transition-colors duration-300">
               Desenvolvido por: <a href="https://www.marketelli.com" target="_blank" rel="noopener noreferrer" className="text-shimmer-gold hover:text-yellow-400 transition-colors font-bold">www.marketelli.com</a>
             </p>
           </div>
@@ -343,8 +357,8 @@ export function IcebergPremiumGlass({ language, setLanguage }: IcebergPremiumGla
 
       {/* Terms Overlay - Protocolo de Operação Bandeirante (Main Page) */}
       {showTerms && createPortal(
-        <div className="fixed inset-0 z-[9999] bg-black/80 backdrop-blur-sm flex items-center justify-center p-4 animate-in fade-in duration-300">
-          <div className="relative w-full max-w-lg bg-[#000000] border border-white/10 rounded-2xl shadow-2xl flex flex-col overflow-hidden max-h-[90vh] animate-in zoom-in-95 duration-300">
+        <div className="fixed inset-0 z-[9999] bg-black/60 backdrop-blur-sm flex items-center justify-center p-4 animate-in fade-in duration-300">
+          <div className="relative w-full max-w-lg bg-[#000000]/90 border border-white/10 rounded-2xl shadow-2xl flex flex-col overflow-hidden max-h-[90vh] animate-in zoom-in-95 duration-300">
             {/* Top Border Taxi Yellow */}
             <div className="h-1 w-full bg-[#F2B705] shadow-[0_0_15px_rgba(242,183,5,0.6)] shrink-0" />
             

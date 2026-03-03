@@ -29,7 +29,8 @@ interface FormData {
   paymentMethod: string;
   needsChange: string;
   changeAmount: string;
-  scheduleDateTime: string;
+  scheduleDate: string;
+  scheduleTime: string;
   description: string;
   name: string;
   whatsapp: string;
@@ -50,11 +51,33 @@ export function TriageModal({ isOpen, onClose, phoneNumber, language }: TriageMo
     paymentMethod: '',
     needsChange: '',
     changeAmount: '',
-    scheduleDateTime: '',
+    scheduleDate: '',
+    scheduleTime: '',
     description: '',
     name: '',
     whatsapp: '',
   });
+
+  const [showTimeSelect, setShowTimeSelect] = useState(false);
+  const [showDateSelect, setShowDateSelect] = useState(false);
+
+  // Generate dates for the next 60 days
+  const getAvailableDates = () => {
+    const dates = [];
+    const today = new Date();
+    for (let i = 0; i < 60; i++) {
+      const d = new Date(today);
+      d.setDate(today.getDate() + i);
+      dates.push(d);
+    }
+    return dates;
+  };
+
+  const formatDateDisplay = (dateStr: string) => {
+    if (!dateStr) return '';
+    const [year, month, day] = dateStr.split('-');
+    return `${day}/${month}`;
+  };
 
   useEffect(() => {
     if (isOpen) {
@@ -75,11 +98,14 @@ export function TriageModal({ isOpen, onClose, phoneNumber, language }: TriageMo
         paymentMethod: '',
         needsChange: '',
         changeAmount: '',
-        scheduleDateTime: '',
+        scheduleDate: '',
+        scheduleTime: '',
         description: '',
         name: '',
         whatsapp: '',
       });
+      setShowTimeSelect(false);
+      setShowDateSelect(false);
 
       return () => {
         document.body.style.overflow = originalStyle;
@@ -204,7 +230,7 @@ export function TriageModal({ isOpen, onClose, phoneNumber, language }: TriageMo
   };
 
   const handleFinalSubmit = () => {
-    const { serviceType, name, location, destination, passengerCount, hasLuggage, luggageCount, paymentMethod, scheduleDateTime, description } = formData;
+    const { serviceType, name, location, destination, passengerCount, hasLuggage, luggageCount, paymentMethod, scheduleDate, scheduleTime, description } = formData;
 
     let message = `*🚕 NOVA SOLICITAÇÃO - PONTO BANDEIRANTE*\n` +
       `------------------------------------------\n` +
@@ -214,7 +240,7 @@ export function TriageModal({ isOpen, onClose, phoneNumber, language }: TriageMo
 
     if (serviceType === 'Agora' || serviceType === 'Agendar Horário') {
       if (serviceType === 'Agendar Horário') {
-         message += `*📅 DATA/HORA:* ${scheduleDateTime}\n`;
+         message += `*📅 DATA/HORA:* ${scheduleDate} às ${scheduleTime}\n`;
       }
       
       message += `*🛫 EMBARQUE:* ${location}\n` +
@@ -228,7 +254,7 @@ export function TriageModal({ isOpen, onClose, phoneNumber, language }: TriageMo
     } else {
       // Tour or Trip
       message += `*📝 DETALHES/ROTEIRO:* ${description}\n` +
-        `*📅 DATA/HORA PREFERIDA:* ${scheduleDateTime}\n` +
+        `*📅 DATA/HORA PREFERIDA:* ${scheduleDate} às ${scheduleTime}\n` +
         `*👥 PASSAGEIROS:* ${passengerCount}\n` +
         `*ℹ️ INFO:* Sob Consulta (Orçamento)\n`;
     }
@@ -423,7 +449,7 @@ export function TriageModal({ isOpen, onClose, phoneNumber, language }: TriageMo
                 <input 
                   type="text" 
                   placeholder={t.locationPlaceholder} 
-                  className="w-full bg-black/40 border border-white/20 rounded-xl py-4 pl-12 pr-4 text-white placeholder-white/40 focus:outline-none focus:border-[#F2B705] transition-colors"
+                  className="w-full bg-black/40 border border-[#F2B705]/30 focus:border-[#F2B705] rounded-xl py-4 pl-12 pr-4 text-white placeholder-white/40 focus:outline-none transition-colors"
                   value={formData.location}
                   onChange={(e) => setFormData({...formData, location: e.target.value})}
                 />
@@ -446,7 +472,7 @@ export function TriageModal({ isOpen, onClose, phoneNumber, language }: TriageMo
                 <input 
                   type="text" 
                   placeholder={t.destinationPlaceholder} 
-                  className="w-full bg-black/40 border border-white/20 rounded-xl py-4 pl-12 pr-4 text-white placeholder-white/40 focus:outline-none focus:border-[#F2B705] transition-colors"
+                  className="w-full bg-black/40 border border-[#F2B705]/30 focus:border-[#F2B705] rounded-xl py-4 pl-12 pr-4 text-white placeholder-white/40 focus:outline-none transition-colors"
                   value={formData.destination}
                   onChange={(e) => setFormData({...formData, destination: e.target.value})}
                 />
@@ -500,7 +526,7 @@ export function TriageModal({ isOpen, onClose, phoneNumber, language }: TriageMo
                   min={1}
                   max={20}
                   placeholder="Ex: 2"
-                  className="w-full bg-black/40 border border-white/20 rounded-xl py-4 pl-12 pr-4 text-white placeholder-white/40 focus:outline-none focus:border-[#F2B705] transition-colors"
+                  className="w-full bg-black/40 border border-[#F2B705]/30 focus:border-[#F2B705] rounded-xl py-4 pl-12 pr-4 text-white placeholder-white/40 focus:outline-none transition-colors"
                   value={formData.luggageCount}
                   onChange={(e) => setFormData({ ...formData, luggageCount: e.target.value })}
                 />
@@ -526,7 +552,7 @@ export function TriageModal({ isOpen, onClose, phoneNumber, language }: TriageMo
                   min={1}
                   max={6}
                   placeholder="Ex: 2"
-                  className="w-full bg-black/40 border border-white/20 rounded-xl py-4 pl-12 pr-4 text-white placeholder-white/40 focus:outline-none focus:border-[#F2B705] transition-colors"
+                  className="w-full bg-black/40 border border-[#F2B705]/30 focus:border-[#F2B705] rounded-xl py-4 pl-12 pr-4 text-white placeholder-white/40 focus:outline-none transition-colors"
                   value={formData.passengerCount}
                   onChange={(e) => setFormData({ ...formData, passengerCount: e.target.value })}
                 />
@@ -624,7 +650,7 @@ export function TriageModal({ isOpen, onClose, phoneNumber, language }: TriageMo
                   type="text"
                   inputMode="decimal"
                   placeholder="Ex: 50"
-                  className="w-full bg-black/40 border border-white/20 rounded-xl py-4 pl-12 pr-4 text-white placeholder-white/40 focus:outline-none focus:border-[#F2B705] transition-colors"
+                  className="w-full bg-black/40 border border-[#F2B705]/30 focus:border-[#F2B705] rounded-xl py-4 pl-12 pr-4 text-white placeholder-white/40 focus:outline-none transition-colors"
                   value={formData.changeAmount}
                   onChange={(e) => setFormData({ ...formData, changeAmount: e.target.value })}
                 />
@@ -643,19 +669,124 @@ export function TriageModal({ isOpen, onClose, phoneNumber, language }: TriageMo
           {step === 'schedule-datetime' && (
             <div className="flex flex-col gap-4 animate-in fade-in slide-in-from-right duration-300">
               <label className="text-white text-sm font-bold uppercase tracking-wide">{t.dateTimeLabel}</label>
-              <div className="relative">
-                <Clock className="absolute left-4 top-1/2 transform -translate-y-1/2 text-[#F2B705] w-5 h-5" />
-                <input 
-                  type="text" 
-                  placeholder={t.schedulePlaceholder} 
-                  className="w-full bg-black/40 border border-white/20 rounded-xl py-4 pl-12 pr-4 text-white placeholder-white/40 focus:outline-none focus:border-[#F2B705] transition-colors"
-                  value={formData.scheduleDateTime}
-                  onChange={(e) => setFormData({...formData, scheduleDateTime: e.target.value})}
-                />
+              
+              <div className="grid grid-cols-2 gap-4">
+                {/* Date Input */}
+                <div className="relative">
+                  <Calendar className="absolute left-4 top-1/2 transform -translate-y-1/2 text-[#F2B705] w-5 h-5 pointer-events-none z-10" />
+                  {language === 'pt' ? (
+                    <>
+                      <button
+                        type="button"
+                        onClick={() => {
+                          setShowDateSelect(!showDateSelect);
+                          setShowTimeSelect(false);
+                        }}
+                        className="w-full bg-black/40 border border-[#F2B705]/30 focus:border-[#F2B705] rounded-xl py-4 pl-12 pr-4 text-white text-left transition-colors flex items-center"
+                      >
+                        <span className={formData.scheduleDate ? "text-white" : "text-white/40"}>
+                          {formData.scheduleDate ? formatDateDisplay(formData.scheduleDate) : "Data"}
+                        </span>
+                      </button>
+                      
+                      {showDateSelect && (
+                        <div className="absolute top-full left-0 mt-2 w-full max-h-48 bg-black/80 backdrop-blur-xl border border-[#F2B705]/30 rounded-xl overflow-y-auto custom-select-scroll z-50 shadow-2xl animate-in fade-in zoom-in-95 duration-200">
+                          {getAvailableDates().map((date) => {
+                            const dateValue = date.toISOString().split('T')[0];
+                            const display = date.toLocaleDateString('pt-BR', { day: '2-digit', month: '2-digit' });
+                            return (
+                              <div
+                                key={dateValue}
+                                onClick={() => {
+                                  setFormData({...formData, scheduleDate: dateValue});
+                                  setShowDateSelect(false);
+                                }}
+                                className={`p-3 text-sm text-center cursor-pointer border-b border-white/5 last:border-0 transition-colors ${
+                                  formData.scheduleDate === dateValue 
+                                    ? 'bg-[#F2B705]/20 text-[#F2B705] font-bold' 
+                                    : 'text-white hover:bg-white/10'
+                                }`}
+                              >
+                                {display}
+                              </div>
+                            );
+                          })}
+                        </div>
+                      )}
+                    </>
+                  ) : (
+                    <input 
+                      type="date" 
+                      placeholder="Data"
+                      min={new Date().toISOString().split('T')[0]}
+                      max={new Date(new Date().setFullYear(new Date().getFullYear() + 1)).toISOString().split('T')[0]}
+                      className="w-full bg-black/40 border border-[#F2B705]/30 focus:border-[#F2B705] rounded-xl py-4 pl-12 pr-4 text-white placeholder-white/40 focus:outline-none transition-colors"
+                      value={formData.scheduleDate}
+                      onChange={(e) => setFormData({...formData, scheduleDate: e.target.value})}
+                    />
+                  )}
+                </div>
+                
+                {/* Time Input */}
+                <div className="relative">
+                  <Clock className="absolute left-4 top-1/2 transform -translate-y-1/2 text-[#F2B705] w-5 h-5 pointer-events-none z-10" />
+                  {language === 'pt' ? (
+                    <>
+                      <button
+                        type="button"
+                        onClick={() => {
+                          setShowTimeSelect(!showTimeSelect);
+                          setShowDateSelect(false);
+                        }}
+                        className="w-full bg-black/40 border border-[#F2B705]/30 focus:border-[#F2B705] rounded-xl py-4 pl-12 pr-4 text-white text-left transition-colors flex items-center"
+                      >
+                        <span className={formData.scheduleTime ? "text-white" : "text-white/40"}>
+                          {formData.scheduleTime || "Hora"}
+                        </span>
+                      </button>
+
+                      {showTimeSelect && (
+                        <div className="absolute top-full left-0 mt-2 w-full max-h-48 bg-black/80 backdrop-blur-xl border border-[#F2B705]/30 rounded-xl overflow-y-auto custom-select-scroll z-50 shadow-2xl animate-in fade-in zoom-in-95 duration-200">
+                          {Array.from({ length: 24 * 4 }).map((_, i) => {
+                            const totalMinutes = i * 15;
+                            const hours = Math.floor(totalMinutes / 60);
+                            const minutes = totalMinutes % 60;
+                            const timeString = `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}`;
+                            return (
+                              <div
+                                key={timeString}
+                                onClick={() => {
+                                  setFormData({...formData, scheduleTime: timeString});
+                                  setShowTimeSelect(false);
+                                }}
+                                className={`p-3 text-sm text-center cursor-pointer border-b border-white/5 last:border-0 transition-colors ${
+                                  formData.scheduleTime === timeString 
+                                    ? 'bg-[#F2B705]/20 text-[#F2B705] font-bold' 
+                                    : 'text-white hover:bg-white/10'
+                                }`}
+                              >
+                                {timeString}
+                              </div>
+                            );
+                          })}
+                        </div>
+                      )}
+                    </>
+                  ) : (
+                    <input 
+                      type="time" 
+                      placeholder="Hora"
+                      className="w-full bg-black/40 border border-[#F2B705]/30 focus:border-[#F2B705] rounded-xl py-4 pl-12 pr-4 text-white placeholder-white/40 focus:outline-none transition-colors"
+                      value={formData.scheduleTime}
+                      onChange={(e) => setFormData({...formData, scheduleTime: e.target.value})}
+                    />
+                  )}
+                </div>
               </div>
+
               <button 
-                onClick={() => formData.scheduleDateTime && navigateNext()}
-                disabled={!formData.scheduleDateTime}
+                onClick={() => formData.scheduleDate && formData.scheduleTime && navigateNext()}
+                disabled={!formData.scheduleDate || !formData.scheduleTime}
                 className="w-full bg-[#F2B705] disabled:opacity-50 disabled:cursor-not-allowed hover:bg-[#D4A004] text-black font-bold py-4 rounded-xl mt-2 transition-all flex items-center justify-center gap-2"
               >
                 {t.nextButton} <ArrowRight className="w-5 h-5" />
@@ -669,7 +800,7 @@ export function TriageModal({ isOpen, onClose, phoneNumber, language }: TriageMo
               <div className="relative">
                 <textarea 
                   placeholder={formData.serviceType === 'City Tour' ? t.tourPlaceholder : t.tripPlaceholder} 
-                  className="w-full bg-black/40 border border-white/20 rounded-xl py-4 px-4 text-white placeholder-white/40 focus:outline-none focus:border-[#F2B705] transition-colors h-32 resize-none"
+                  className="w-full bg-black/40 border border-[#F2B705]/30 focus:border-[#F2B705] rounded-xl py-4 px-4 text-white placeholder-white/40 focus:outline-none transition-colors h-32 resize-none"
                   value={formData.description}
                   onChange={(e) => setFormData({...formData, description: e.target.value})}
                 />
@@ -694,7 +825,7 @@ export function TriageModal({ isOpen, onClose, phoneNumber, language }: TriageMo
                 <input 
                   type="text" 
                   placeholder={t.namePlaceholder} 
-                  className="w-full bg-black/40 border border-white/20 rounded-xl py-3 pl-12 pr-4 text-white placeholder-white/40 focus:outline-none focus:border-[#F2B705] transition-colors"
+                  className="w-full bg-black/40 border border-[#F2B705]/30 focus:border-[#F2B705] rounded-xl py-3 pl-12 pr-4 text-white placeholder-white/40 focus:outline-none transition-colors"
                   value={formData.name}
                   onChange={(e) => setFormData({...formData, name: e.target.value})}
                 />
@@ -705,7 +836,7 @@ export function TriageModal({ isOpen, onClose, phoneNumber, language }: TriageMo
                 <input 
                   type="tel" 
                   placeholder={t.whatsappPlaceholder} 
-                  className="w-full bg-black/40 border border-white/20 rounded-xl py-3 pl-12 pr-4 text-white placeholder-white/40 focus:outline-none focus:border-[#F2B705] transition-colors"
+                  className="w-full bg-black/40 border border-[#F2B705]/30 focus:border-[#F2B705] rounded-xl py-3 pl-12 pr-4 text-white placeholder-white/40 focus:outline-none transition-colors"
                   value={formData.whatsapp}
                   onChange={(e) => setFormData({...formData, whatsapp: e.target.value})}
                 />
@@ -738,7 +869,7 @@ export function TriageModal({ isOpen, onClose, phoneNumber, language }: TriageMo
         </div>
 
         <div className="mt-8 text-center">
-          <p className="text-white/40 text-xs font-medium uppercase tracking-widest">
+          <p className="text-[#F2B705]/60 text-xs font-medium uppercase tracking-widest">
             PONTO DE TÁXI BANDEIRANTE
           </p>
         </div>

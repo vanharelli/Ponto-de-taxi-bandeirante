@@ -2,7 +2,7 @@ import { Swiper, SwiperSlide } from 'swiper/react'
 import 'swiper/css'
 import 'swiper/css/navigation'
 import 'swiper/css/pagination'
-import { Navigation, Pagination, Autoplay } from 'swiper/modules'
+import { Pagination, Autoplay } from 'swiper/modules'
 
 const imageUrls = [
   '/taxi/taxi.webp',
@@ -16,19 +16,17 @@ export function NetflixCarousel() {
   return (
     <div className="w-full max-w-4xl mx-auto my-0 px-0">
       <Swiper
-        modules={[Navigation, Pagination, Autoplay]}
+        modules={[Pagination, Autoplay]}
         spaceBetween={20}
         slidesPerView={1}
-        navigation
         pagination={{ clickable: true, dynamicBullets: true }}
         autoplay={{
           delay: 3500,
           disableOnInteraction: false,
         }}
         loop={true}
-        className="w-full h-[250px] sm:h-[350px] md:h-[450px] rounded-2xl shadow-2xl border border-white/10"
+        className="w-full h-[250px] sm:h-[350px] md:h-[450px] rounded-2xl shadow-2xl border border-[#F2B705]/30"
         style={{
-          '--swiper-navigation-color': '#F2B705',
           '--swiper-pagination-color': '#F2B705',
         } as React.CSSProperties}
       >
