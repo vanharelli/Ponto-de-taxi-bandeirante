@@ -211,7 +211,7 @@ export function IcebergPremiumGlass({ language, setLanguage }: IcebergPremiumGla
 
               {/* Operating Hours Popover */}
               {showHours && (
-                <div className="absolute top-full left-1/2 transform -translate-x-1/2 mt-3 w-64 bg-black/80 backdrop-blur-xl border border-yellow-400/30 rounded-xl p-4 shadow-2xl z-50 animate-in fade-in zoom-in-95 duration-200">
+                <div className="absolute top-full left-1/2 transform -translate-x-1/2 mt-3 w-64 bg-black/60 backdrop-blur-xl border border-yellow-400/30 rounded-xl p-4 shadow-2xl z-50 animate-in fade-in zoom-in-95 duration-200">
                   <div className="flex flex-col items-center text-center gap-2">
                     <Clock className="w-6 h-6 text-yellow-400 mb-1" />
                     <h3 className="text-white font-bold text-sm uppercase tracking-wide border-b border-white/10 pb-2 w-full">
@@ -225,7 +225,7 @@ export function IcebergPremiumGlass({ language, setLanguage }: IcebergPremiumGla
                     </div>
                   </div>
                   {/* Arrow */}
-                  <div className="absolute -top-1.5 left-1/2 transform -translate-x-1/2 w-3 h-3 bg-black/80 backdrop-blur-xl border-t border-l border-yellow-400/30 rotate-45"></div>
+                  <div className="absolute -top-1.5 left-1/2 transform -translate-x-1/2 w-3 h-3 bg-black/60 backdrop-blur-xl border-t border-l border-yellow-400/30 rotate-45"></div>
                 </div>
               )}
             </div>
