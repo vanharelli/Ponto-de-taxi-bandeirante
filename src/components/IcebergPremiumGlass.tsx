@@ -204,7 +204,7 @@ export function IcebergPremiumGlass({ language, setLanguage }: IcebergPremiumGla
                 className={`flex items-center justify-center gap-3 px-4 py-1.5 rounded-full bg-transparent border ${isSystemActive ? 'border-green-500/50 text-green-400 shadow-[0_0_10px_rgba(34,197,94,0.2)]' : 'border-red-500/50 text-red-400 shadow-[0_0_10px_rgba(239,68,68,0.2)]'} text-xs font-bold tracking-widest uppercase mx-auto transition-all duration-300 hover:scale-105`}
               >
                 <div className="relative w-2 h-2 flex items-center justify-center">
-                  <span className={`prismatic-led ${!isSystemActive && 'bg-red-500 shadow-red-500'}`}></span>
+                  <span className={`block w-full h-full rounded-full transition-all duration-500 ${!isSystemActive ? 'bg-red-600 shadow-[0_0_8px_2px_rgba(220,38,38,0.8)] animate-pulse' : 'bg-green-500 shadow-[0_0_8px_2px_rgba(34,197,94,0.8)]'}`}></span>
                 </div>
                 <span className="pt-0.5">{isSystemActive ? t.statusActive : t.statusInactive}</span>
               </button>
