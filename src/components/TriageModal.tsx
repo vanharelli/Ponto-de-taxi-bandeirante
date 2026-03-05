@@ -252,47 +252,55 @@ export function TriageModal({ isOpen, onClose, phoneNumber, language }: TriageMo
   };
 
   const handleFinalSubmit = () => {
-    const { serviceType, name, location, destination, passengerCount, hasLuggage, luggageCount, paymentMethod, scheduleDate, scheduleTime, description } = formData;
+  const { 
+    serviceType, name, location, destination, passengerCount, 
+    hasLuggage, luggageCount, paymentMethod, scheduleDate, 
+    scheduleTime, description, needsChange, changeAmount, tourDuration 
+  } = formData;
 
-    let message = `*🚕 NOVA SOLICITAÇÃO - PONTO BANDEIRANTE*\n` +
-      `------------------------------------------\n` +
-      `*📍 SERVIÇO:* ${serviceType}\n` +
-      `*👤 CLIENTE:* ${name}\n` +
-      `------------------------------------------\n`;
+  let message = `*🚕 NOVA SOLICITAÇÃO - PONTO DE TAXI BANDEIRANTE*\n` +
+    `__________________________________\n\n` +
+    `👤 *CLIENTE:* ${name}\n` +
+    `📍 *SERVIÇO:* ${serviceType}\n` +
+    `👥 *PASSAGEIROS:* ${passengerCount}\n` +
+    `__________________________________\n\n`;
 
-    if (serviceType === 'Agora' || serviceType === 'Agendar Horário') {
-      if (serviceType === 'Agendar Horário') {
-         message += `*📅 DATA/HORA:* ${scheduleDate} às ${scheduleTime}\n`;
-      }
+  if (serviceType === 'Agora' || serviceType === 'Agendar Horário') {
+    message += `🛫 *EMBARQUE:* ${location}\n` +
+      `🏁 *DESTINO:* ${destination}\n`;
       
-      message += `*🛫 EMBARQUE:* ${location}\n` +
-        `*🏁 DESTINO:* ${destination}\n` +
-        `------------------------------------------\n` +
-        `*📦 VEÍCULO:* Padrão\n` +
-        `*👥 PASSAGEIROS:* ${passengerCount}\n` +
-        `*🧳 BAGAGEM:* ${hasLuggage}${luggageCount ? ` (${luggageCount})` : ''}\n` +
-        `*💳 PAGAMENTO:* ${paymentMethod}\n` +
-        (formData.needsChange === 'Sim' ? `*💵 TROCO:* Sim (para R$ ${formData.changeAmount})\n` : '');
-    } else {
-      // Tour or Trip
-      if (serviceType === 'City Tour') {
-        message += `*⏱️ DURAÇÃO:* ${formData.tourDuration}\n`;
-      }
-      if (description) {
-        message += `*📝 DETALHES/ROTEIRO:* ${description}\n`;
-      }
-      message += `*📅 DATA/HORA PREFERIDA:* ${scheduleDate} às ${scheduleTime}\n` +
-        `*👥 PASSAGEIROS:* ${passengerCount}\n` +
-        `*ℹ️ INFO:* Sob Consulta (Orçamento)\n`;
+    if (serviceType === 'Agendar Horário') {
+      message += `📅 *DATA/HORA:* ${scheduleDate} às ${scheduleTime}\n`;
     }
+    
+    message += `__________________________________\n\n` +
+      `🧳 *BAGAGEM:* ${hasLuggage}${hasLuggage === 'Sim' && luggageCount ? ` (${luggageCount})` : ''}\n` +
+      `💳 *PAGAMENTO:* ${paymentMethod}\n`;
 
-    message += `------------------------------------------\n` +
-      `_Enviado via Central Digital Bandeirante_`;
+    if (needsChange === 'Sim') {
+      message += `💵 *TROCO PARA:* R$ ${changeAmount}\n`;
+    }
+  } else {
+    // Tour ou Viagem
+    message += `📅 *DATA PREFERIDA:* ${scheduleDate} às ${scheduleTime}\n`;
+    
+    if (serviceType === 'City Tour') {
+      message += `⏱️ *DURAÇÃO:* ${tourDuration}\n`;
+    }
+    if (description) {
+      message += `📝 *ROTEIRO/DETALHES:* ${description}\n`;
+    }
+    message += `__________________________________\n\n` +
+      `ℹ️ *STATUS:* Sob Consulta (Orçamento)\n`;
+  }
 
-    const encodedMessage = encodeURIComponent(message);
-    window.open(`https://wa.me/${phoneNumber}?text=${encodedMessage}`, '_blank');
-    onClose();
-  };
+  message += `__________________________________\n\n` +
+    `_Enviado via Central de atendimento Bandeirante_`;
+
+  const encodedMessage = encodeURIComponent(message);
+  window.open(`https://wa.me/${phoneNumber}?text=${encodedMessage}`, '_blank');
+  onClose();
+};
 
   const getProgress = () => {
     // Determine total steps based on flow
