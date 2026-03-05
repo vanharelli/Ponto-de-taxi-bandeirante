@@ -15,7 +15,7 @@ type Step =
   // Common Steps
   | 'location' | 'destination' | 'luggage' | 'luggage-count' | 'passengers' | 'payment-method' | 'cash-change' | 'cash-change-amount' | 'contact'
   // Specific Steps
-  | 'schedule-datetime' | 'description';
+  | 'schedule-datetime' | 'description' | 'tour-duration';
 
 type ServiceType = 'Agora' | 'Agendar Horário' | 'City Tour' | 'Viagem Particular' | '';
 
@@ -32,6 +32,7 @@ interface FormData {
   scheduleDate: string;
   scheduleTime: string;
   description: string;
+  tourDuration: string;
   name: string;
   whatsapp: string;
 }
@@ -54,6 +55,7 @@ export function TriageModal({ isOpen, onClose, phoneNumber, language }: TriageMo
     scheduleDate: '',
     scheduleTime: '',
     description: '',
+    tourDuration: '',
     name: '',
     whatsapp: '',
   });
@@ -101,6 +103,7 @@ export function TriageModal({ isOpen, onClose, phoneNumber, language }: TriageMo
         scheduleDate: '',
         scheduleTime: '',
         description: '',
+        tourDuration: '',
         name: '',
         whatsapp: '',
       });
@@ -122,7 +125,8 @@ export function TriageModal({ isOpen, onClose, phoneNumber, language }: TriageMo
     setFormData({ ...formData, serviceType: type });
     if (type === 'Agora') handleNextStep('location');
     else if (type === 'Agendar Horário') handleNextStep('schedule-datetime');
-    else if (type === 'City Tour' || type === 'Viagem Particular') handleNextStep('description');
+    else if (type === 'City Tour') handleNextStep('tour-duration');
+    else if (type === 'Viagem Particular') handleNextStep('destination');
   };
 
   // Centralized Navigation Logic
@@ -140,7 +144,11 @@ export function TriageModal({ isOpen, onClose, phoneNumber, language }: TriageMo
         break;
 
       case 'destination':
-        handleNextStep('luggage');
+        if (formData.serviceType === 'Viagem Particular') {
+          handleNextStep('schedule-datetime');
+        } else {
+          handleNextStep('luggage');
+        }
         break;
 
       case 'luggage':
@@ -174,6 +182,10 @@ export function TriageModal({ isOpen, onClose, phoneNumber, language }: TriageMo
         handleNextStep('contact');
         break;
       
+      case 'tour-duration':
+        handleNextStep('schedule-datetime');
+        break;
+
       case 'description':
         handleNextStep('schedule-datetime');
         break;
@@ -190,7 +202,11 @@ export function TriageModal({ isOpen, onClose, phoneNumber, language }: TriageMo
         else if (formData.serviceType === 'Agendar Horário') setStep('schedule-datetime');
         break;
 
-      case 'destination': setStep('location'); break;
+      case 'destination': 
+        if (formData.serviceType === 'Viagem Particular') setStep('select-service');
+        else setStep('location'); 
+        break;
+
       case 'luggage': setStep('destination'); break;
       case 'luggage-count': setStep('luggage'); break;
       
@@ -209,10 +225,16 @@ export function TriageModal({ isOpen, onClose, phoneNumber, language }: TriageMo
       // Specific Steps
       case 'schedule-datetime': 
         if (formData.serviceType === 'Agendar Horário') setStep('select-service');
-        else setStep('description'); // Tour/Trip
+        else if (formData.serviceType === 'City Tour') setStep('tour-duration');
+        else if (formData.serviceType === 'Viagem Particular') setStep('destination');
         break;
 
-      case 'description': setStep('select-service'); break;
+      case 'description': 
+        if (formData.serviceType === 'City Tour') setStep('tour-duration');
+        else setStep('select-service'); 
+        break;
+
+      case 'tour-duration': setStep('select-service'); break;
 
       case 'contact': 
         if (formData.serviceType === 'City Tour' || formData.serviceType === 'Viagem Particular') {
@@ -253,8 +275,13 @@ export function TriageModal({ isOpen, onClose, phoneNumber, language }: TriageMo
         (formData.needsChange === 'Sim' ? `*💵 TROCO:* Sim (para R$ ${formData.changeAmount})\n` : '');
     } else {
       // Tour or Trip
-      message += `*📝 DETALHES/ROTEIRO:* ${description}\n` +
-        `*📅 DATA/HORA PREFERIDA:* ${scheduleDate} às ${scheduleTime}\n` +
+      if (serviceType === 'City Tour') {
+        message += `*⏱️ DURAÇÃO:* ${formData.tourDuration}\n`;
+      }
+      if (description) {
+        message += `*📝 DETALHES/ROTEIRO:* ${description}\n`;
+      }
+      message += `*📅 DATA/HORA PREFERIDA:* ${scheduleDate} às ${scheduleTime}\n` +
         `*👥 PASSAGEIROS:* ${passengerCount}\n` +
         `*ℹ️ INFO:* Sob Consulta (Orçamento)\n`;
     }
@@ -294,12 +321,22 @@ export function TriageModal({ isOpen, onClose, phoneNumber, language }: TriageMo
       if (step.includes('payment') || step.includes('cash')) currentStepIndex = 6;
       if (step === 'contact') currentStepIndex = 7;
     } else {
-      // Tour/Trip: desc, date, pass, contact
-      totalSteps = 4;
-      if (step === 'description') currentStepIndex = 1;
-      if (step === 'schedule-datetime') currentStepIndex = 2;
-      if (step === 'passengers') currentStepIndex = 3;
-      if (step === 'contact') currentStepIndex = 4;
+      // Tour/Trip
+      if (formData.serviceType === 'City Tour') {
+        // duration, date, pass, contact
+        totalSteps = 4;
+        if (step === 'tour-duration') currentStepIndex = 1;
+        if (step === 'schedule-datetime') currentStepIndex = 2;
+        if (step === 'passengers') currentStepIndex = 3;
+        if (step === 'contact') currentStepIndex = 4;
+      } else {
+        // dest, date, pass, contact
+        totalSteps = 4;
+        if (step === 'destination') currentStepIndex = 1;
+        if (step === 'schedule-datetime') currentStepIndex = 2;
+        if (step === 'passengers') currentStepIndex = 3;
+        if (step === 'contact') currentStepIndex = 4;
+      }
     }
 
     return (currentStepIndex / totalSteps) * 100;
@@ -317,6 +354,7 @@ export function TriageModal({ isOpen, onClose, phoneNumber, language }: TriageMo
       case 'cash-change': return t.changeTitle;
       case 'cash-change-amount': return t.changeAmountTitle;
       case 'schedule-datetime': return t.scheduleTitle;
+      case 'tour-duration': return t.tourDurationTitle;
       case 'description': return formData.serviceType === 'City Tour' ? t.tourTitle : t.tripTitle;
       case 'contact': return t.contactTitle;
       default: return '';
@@ -335,6 +373,7 @@ export function TriageModal({ isOpen, onClose, phoneNumber, language }: TriageMo
       case 'cash-change': return t.changeSubtitle;
       case 'cash-change-amount': return t.changeAmountSubtitle;
       case 'schedule-datetime': return t.scheduleSubtitleStep;
+      case 'tour-duration': return t.tourDurationSubtitle;
       case 'description': return formData.serviceType === 'City Tour' ? t.tourSubtitleStep : t.tripSubtitleStep;
       case 'contact': return t.contactSubtitle;
       default: return '';
@@ -471,7 +510,7 @@ export function TriageModal({ isOpen, onClose, phoneNumber, language }: TriageMo
                 <Navigation className="absolute left-4 top-1/2 transform -translate-y-1/2 text-[#F2B705] w-5 h-5" />
                 <input 
                   type="text" 
-                  placeholder={t.destinationPlaceholder} 
+                  placeholder={formData.serviceType === 'Viagem Particular' ? t.tripPlaceholder : t.destinationPlaceholder} 
                   className="w-full bg-black/40 border border-[#F2B705]/30 focus:border-[#F2B705] rounded-xl py-4 pl-12 pr-4 text-white placeholder-white/40 focus:outline-none transition-colors"
                   value={formData.destination}
                   onChange={(e) => setFormData({...formData, destination: e.target.value})}
@@ -666,6 +705,53 @@ export function TriageModal({ isOpen, onClose, phoneNumber, language }: TriageMo
           )}
 
           {/* SPECIFIC STEPS */}
+          {step === 'tour-duration' && (
+            <div className="flex flex-col gap-4 animate-in fade-in slide-in-from-right duration-300">
+              <label className="text-white text-sm font-bold uppercase tracking-wide">{t.tourDurationLabel}</label>
+              <div className="relative">
+                <Clock className="absolute left-4 top-1/2 transform -translate-y-1/2 text-[#F2B705] w-5 h-5" />
+                <input 
+                  type="text" 
+                  placeholder={t.tourDurationPlaceholder} 
+                  className="w-full bg-black/40 border border-[#F2B705]/30 focus:border-[#F2B705] rounded-xl py-4 pl-12 pr-4 text-white placeholder-white/40 focus:outline-none transition-colors"
+                  value={formData.tourDuration}
+                  onChange={(e) => setFormData({...formData, tourDuration: e.target.value})}
+                />
+              </div>
+
+              <div className="mt-2">
+                <label className="text-white text-sm font-bold uppercase tracking-wide block mb-2">{t.touristSpotsTitle}</label>
+                <div className="bg-black/40 border border-white/10 rounded-xl p-4 max-h-40 overflow-y-auto custom-scrollbar">
+                  <ul className="space-y-2">
+                    {[
+                      "Congresso Nacional",
+                      "Catedral Metropolitana",
+                      "Praça dos Três Poderes",
+                      "Palácio da Alvorada",
+                      "Ponte JK",
+                      "Torre de TV",
+                      "Memorial JK",
+                      "Pontão do Lago Sul"
+                    ].map((spot, index) => (
+                      <li key={index} className="text-white/80 text-sm flex items-center gap-2">
+                        <span className="w-1.5 h-1.5 rounded-full bg-[#F2B705]" />
+                        {spot}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </div>
+
+              <button 
+                onClick={() => formData.tourDuration && navigateNext()}
+                disabled={!formData.tourDuration}
+                className="w-full bg-[#F2B705] disabled:opacity-50 disabled:cursor-not-allowed hover:bg-[#D4A004] text-black font-bold py-4 rounded-xl mt-2 transition-all flex items-center justify-center gap-2"
+              >
+                {t.nextButton} <ArrowRight className="w-5 h-5" />
+              </button>
+            </div>
+          )}
+
           {step === 'schedule-datetime' && (
             <div className="flex flex-col gap-4 animate-in fade-in slide-in-from-right duration-300">
               <label className="text-white text-sm font-bold uppercase tracking-wide">{t.dateTimeLabel}</label>
