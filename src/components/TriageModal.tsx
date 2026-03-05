@@ -77,7 +77,7 @@ export function TriageModal({ isOpen, onClose, phoneNumber, language }: TriageMo
 
   const formatDateDisplay = (dateStr: string) => {
     if (!dateStr) return '';
-    const [year, month, day] = dateStr.split('-');
+    const [, month, day] = dateStr.split('-');
     return `${day}/${month}`;
   };
 
