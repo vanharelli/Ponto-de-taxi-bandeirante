@@ -18,8 +18,8 @@ export function IcebergPremiumGlass({ language, setLanguage }: IcebergPremiumGla
   const [showTerms, setShowTerms] = useState(false)
   
   const t = translations[language]
-  const phoneNumber = '+556135521071'
-  const phoneDisplay = '(61) 3552-1071'
+  const phoneNumber = '+5561982063005'
+  const phoneDisplay = '(61) 98206-3005'
 
   const reviews = [
     { name: "Carlos Silva", text: "Melhor ponto do Bandeirante, motoristas muito educados!", stars: 5 },
@@ -80,7 +80,7 @@ export function IcebergPremiumGlass({ language, setLanguage }: IcebergPremiumGla
         <TriageModal 
           isOpen={showTriage}
           onClose={() => setShowTriage(false)}
-          phoneNumber="556135521071"
+          phoneNumber="5561982063005"
           language={language}
         />
         <div className="w-full h-full max-w-7xl flex flex-col items-center justify-start animate-fade-in-up overflow-y-auto custom-scrollbar relative mx-auto">

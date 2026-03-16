@@ -95,6 +95,25 @@ img {
   padding-right: env(safe-area-inset-right);
 }
 
+/* Custom Animations */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes scaleIn {
+  from { transform: scale(0.9); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.3s ease-out forwards;
+}
+
+.animate-scale-in {
+  animation: scaleIn 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
 /* Premium Glass - Iceberg Standard */
 .premium-glass {
   background: rgba(255, 255, 255, 0.05);

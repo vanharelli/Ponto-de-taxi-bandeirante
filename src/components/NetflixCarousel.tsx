@@ -3,6 +3,8 @@ import 'swiper/css'
 import 'swiper/css/navigation'
 import 'swiper/css/pagination'
 import { Pagination, Autoplay } from 'swiper/modules'
+import { useState } from 'react'
+import { ImageViewer } from './ImageViewer'
 
 const imageUrls = [
   '/taxi/taxi.webp',
@@ -13,6 +15,14 @@ const imageUrls = [
 ]
 
 export function NetflixCarousel() {
+  const [viewerOpen, setViewerOpen] = useState(false);
+  const [selectedImage, setSelectedImage] = useState('');
+
+  const openViewer = (url: string) => {
+    setSelectedImage(url);
+    setViewerOpen(true);
+  };
+
   return (
     <div className="w-full max-w-4xl mx-auto my-0 px-0">
       <Swiper
@@ -31,7 +41,7 @@ export function NetflixCarousel() {
         } as React.CSSProperties}
       >
         {imageUrls.map((url, index) => (
-          <SwiperSlide key={index} className="w-full h-full bg-black/20 rounded-2xl overflow-hidden">
+          <SwiperSlide key={index} className="w-full h-full bg-black/20 rounded-2xl overflow-hidden cursor-pointer" onClick={() => openViewer(url)}>
             <div className="w-full h-full flex items-center justify-center relative group">
               <img
                 src={url}
@@ -48,6 +58,12 @@ export function NetflixCarousel() {
           </SwiperSlide>
         ))}
       </Swiper>
+      
+      <ImageViewer 
+        isOpen={viewerOpen} 
+        onClose={() => setViewerOpen(false)} 
+        imageUrl={selectedImage} 
+      />
     </div>
   )
 }

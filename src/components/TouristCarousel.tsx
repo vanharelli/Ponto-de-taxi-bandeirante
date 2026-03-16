@@ -2,6 +2,8 @@ import { Swiper, SwiperSlide } from 'swiper/react'
 import 'swiper/css'
 import 'swiper/css/navigation'
 import { Autoplay } from 'swiper/modules'
+import { useState } from 'react'
+import { ImageViewer } from './ImageViewer'
 
 const imageUrls = [
   '/turistico/Pontao-divulgacao-2.jpg',
@@ -20,6 +22,14 @@ const imageUrls = [
 ]
 
 export function TouristCarousel() {
+  const [viewerOpen, setViewerOpen] = useState(false);
+  const [selectedImage, setSelectedImage] = useState('');
+
+  const openViewer = (url: string) => {
+    setSelectedImage(url);
+    setViewerOpen(true);
+  };
+
   return (
     <div className="w-full max-w-4xl mx-auto my-0 px-0">
       <Swiper
@@ -35,7 +45,7 @@ export function TouristCarousel() {
         className="w-full h-[140px] sm:h-[200px] md:h-[280px] rounded-2xl shadow-2xl border border-white/10"
       >
         {imageUrls.map((url, index) => (
-          <SwiperSlide key={index} className="w-full h-full bg-black/20 rounded-2xl overflow-hidden">
+          <SwiperSlide key={index} className="w-full h-full bg-black/20 rounded-2xl overflow-hidden cursor-pointer" onClick={() => openViewer(url)}>
             <div className="w-full h-full flex items-center justify-center relative group">
               <img
                 src={url}
@@ -52,6 +62,12 @@ export function TouristCarousel() {
           </SwiperSlide>
         ))}
       </Swiper>
+      
+      <ImageViewer 
+        isOpen={viewerOpen} 
+        onClose={() => setViewerOpen(false)} 
+        imageUrl={selectedImage} 
+      />
     </div>
   )
 }
