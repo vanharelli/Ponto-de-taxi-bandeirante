@@ -32,6 +32,7 @@ export const translations = {
     hoursStatusOpen: 'ABERTO AGORA',
     hoursStatusClosed: 'FECHADO AGORA',
     doubleBackExit: 'Pressione voltar novamente para sair',
+    whatsappMessage: 'Olá, preciso de um taxi agora!',
     
     // Triage Modal
     triage: {
@@ -143,6 +144,7 @@ export const translations = {
     hoursStatusOpen: 'OPEN NOW',
     hoursStatusClosed: 'CLOSED NOW',
     doubleBackExit: 'Press back again to exit',
+    whatsappMessage: 'Hello, I need a taxi now!',
 
     // Triage Modal
     triage: {
@@ -254,6 +256,7 @@ export const translations = {
     hoursStatusOpen: 'ABIERTO AHORA',
     hoursStatusClosed: 'CERRADO AHORA',
     doubleBackExit: 'Presione volver nuevamente para salir',
+    whatsappMessage: '¡Hola, necesito un taxi ahora!',
 
     // Triage Modal
     triage: {

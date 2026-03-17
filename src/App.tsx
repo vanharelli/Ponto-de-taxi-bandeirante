@@ -1,4 +1,5 @@
 import { IcebergPremiumGlass } from './components/IcebergPremiumGlass.tsx';
+import { WhatsAppButton } from './components/WhatsAppButton.tsx';
 import { useDoubleBackExit } from './hooks/useDoubleBackExit';
 import { useEffect, useState } from 'react';
 import { translations, type Language } from './utils/translations';
@@ -73,6 +74,9 @@ function App() {
           </div>
         </div>
       </div>
+
+      {/* Floating WhatsApp Button */}
+      <WhatsAppButton language={language} />
 
       {/* Security Toast (Double-Back Protocol) */}
       {showExitToast && (
